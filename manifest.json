@@ -1,0 +1,25 @@
+{
+  "name": "Swamp Nuts",
+  "short_name": "Swamp Nuts",
+  "start_url": "https://swampnuts.biz",
+  "icons": [
+    {
+      "src": "\/assets\/content\/Logo.png",
+      "sizes": "168x168",
+      "type": "image\/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "categories": ["food"],
+  "description": "Swamp Nuts - Cajun Boiled Peanuts Delivered In The Prairieville Area.",
+  "lang": "en-US",
+  "screenshots": [
+    {
+      "src": "\/assets\/content\/screenshot.png",
+      "sizes": "1750x931",
+      "type": "image\/png"
+    }
+  ]
+}
