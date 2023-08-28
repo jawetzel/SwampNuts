@@ -1,2 +1,2 @@
 User-Agent: *
-Sitemap: https://riversidemarketla.com/sitemap.xml
+Sitemap: https://swampnuts.biz/sitemap.xml
