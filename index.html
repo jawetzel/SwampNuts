@@ -70,7 +70,8 @@
     <script>
         submitorder = function(){
             var formdata = new FormData();
-
+            var myHeaders = new Headers();
+            myHeaders.append("Referer", "https://docs.google.com/forms/d/e/1FAIpQLSfsC5Wq7rP_7N_EcCbFTmrXL1gtcksJsfh8-Eo4B2AA17NkIQ/viewform?fbzx=1818383721703084969");
             var notePrefix = document.getElementById("preorder").checked ? "Market Preorder - " : "Order - "
 
             formdata.append("entry.1781820279", document.getElementById("name").value);
@@ -81,6 +82,7 @@
 
             var requestOptions = {
                 method: 'POST',
+                headers: myHeaders,
                 body: formdata,
                 redirect: 'follow'
             };
