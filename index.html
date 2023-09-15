@@ -4,14 +4,14 @@
     <meta charset="utf-8" />
     <link rel="icon" href="./Logo.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-   
+
     <link rel="manifest" href="/manifest.json">
- 
-    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:;connect-src https://www.google-analytics.com/g/collect https://docs.google.com/forms/u/0/d/e/1FAIpQLSfsC5Wq7rP_7N_EcCbFTmrXL1gtcksJsfh8-Eo4B2AA17NkIQ/formResponse;default-src 'self' 'unsafe-inline'  https://www.google-analytics.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://www.googletagmanager.com">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://www.google-analytics.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://www.googletagmanager.com">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
- 
+
     <meta name='keywords' content="prarieville, asenction parish, louisiana, peanuts, boiled peanuts, hot boiled peanuts, cajun, cajun peanuts, cajun boiled peanuts, swamp nuts, nuts, boiled nuts">
     <meta name='description' content="Swamp Nuts - Cajun Boiled Peanuts Delivered In The Prairieville Area.">
 
@@ -21,23 +21,23 @@
 
     <title>Swamp Nuts - Cajun Boiled Peanuts Delivered To The Prairieville Area</title>
 
- 
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-9951VXX0Q7"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
 
-	  gtag('config', 'G-9951VXX0Q7');
-	</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9951VXX0Q7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-9951VXX0Q7');
+    </script>
 
     <script>
-        RecordExternalClick = function (btnName, location) {
+        var RecordExternalClick = function (btnName, location) {
             gtag('event', "external-click - " + btnName, {
                 'event_category': location,
                 'event_label': btnName
-        });
+            });
         }
     </script>
 
@@ -67,39 +67,6 @@
         }
     </style>
 
-    <script>
-        submitorder = function(){
-            var formdata = new FormData();
-            var myHeaders = new Headers();
-            myHeaders.append("Referer", "https://docs.google.com/forms/d/e/1FAIpQLSfsC5Wq7rP_7N_EcCbFTmrXL1gtcksJsfh8-Eo4B2AA17NkIQ/viewform?fbzx=1818383721703084969");
-            myHeaders.append('Content-Type', 'multipart/form-data')
-            var notePrefix = document.getElementById("preorder").checked ? "Market Preorder - " : "Order - "
-
-            formdata.append("entry.1781820279", document.getElementById("name").value);
-            formdata.append("entry.1222004101", document.getElementById("phone").value);
-            formdata.append("entry.2111826794", document.getElementById("quantity").value);
-            formdata.append("entry.85728482", document.getElementById("address").value);
-            formdata.append("entry.1803844379", notePrefix + document.getElementById("notes").value);
-
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: formdata,
-                redirect: 'follow'
-            };
-
-            fetch("https://docs.google.com/forms/u/0/d/e/1FAIpQLSfsC5Wq7rP_7N_EcCbFTmrXL1gtcksJsfh8-Eo4B2AA17NkIQ/formResponse", requestOptions)
-                .then(response => response.text())
-                .then(result => {
-                    RecordExternalClick("OrderOnline", "swampnuts.biz")
-                    console.log(result)
-                    })
-                .catch(error => console.log('error', error));
-
-            return false
-        }
-    </script>
-
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -110,11 +77,12 @@
     <div class="d-flex flex-row">
         <img src="./assets/logotrans.png" alt="Swamp Nuts Logo" height="50" class="align-top">
         <h1 class="align-top mx-4">Swamp Nuts</h1>
-		<img src="./assets/logotrans.png" style="transform: scaleX(-1);" alt="Swamp Nuts Logo" height="50" class="align-top">
-		<div class="flex-grow-1"></div>
+        <img src="./assets/logotrans.png" style="transform: scaleX(-1);" alt="Swamp Nuts Logo" height="50" class="align-top">
+        <div class="flex-grow-1"></div>
         <div class=" d-none d-md-inline-block mt-2 d-flex">
-            <a href="#orderform" title="Order Online"
-               class="btn btn-dark text-uppercase d-inline-flex">
+            <a onclick="RecordExternalClick('order online', 'header')"
+               href="https://forms.gle/Ld9PyRjF1KjoTsSZ7"
+               class="btn btn-dark text-uppercase d-inline-flex" target="_blank" rel="noreferrer noopener" title="External Link - Order Online">
                 <strong class="d-block">
                     Order Online
                 </strong>
@@ -123,74 +91,78 @@
     </div>
 </div>
 <div class="d-none container my-4 pb-4">
-	<div class="row mt-4">
-		<div class="col-12">
-			<div class="card bg-white">
-				<div class="card-body d-md-flex">
-					<div class="pt-4 ps-4">
-						<p>
-							We are currently <strong class="text-danger">SOLD OUT</strong>. We cook every Friday. 
-							<a class="btn btn-primary text-uppercase " href="#orderform" title="Order Online"">Preorder today!</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-white">
+                <div class="card-body d-md-flex">
+                    <div class="pt-4 ps-4">
+                        <p>
+                            We are currently <strong class="text-danger">SOLD OUT</strong>. We cook every Friday.
+                            <a class="btn btn-primary text-uppercase " onclick="RecordExternalClick('order online', 'header')"
+                               href="https://forms.gle/Ld9PyRjF1KjoTsSZ7"
+                               target="_blank" rel="noreferrer noopener" title="External Link - Order Online">Preorder today!</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-	
+
 <div class="container my-4 pb-4">
     <div class="row mt-4">
         <div class="col-12">
             <div class="card bg-white">
                 <div class="card-body d-md-flex">
-                    
+
                     <div class="col-md-6 pt-4 ps-4">
                         <p>
                             <strong>
-                                Indulge in the true taste of the South with our mouthwatering selection of home-cooked 
-								boiled peanuts. Our passion for preserving tradition and savoring authentic flavors led 
-								us to craft the perfect recipe that captures the essence of a Cajun crawfish boil. 🦐🔥
+                                Indulge in the true taste of the South with our mouthwatering selection of home-cooked
+                                boiled peanuts. Our passion for preserving tradition and savoring authentic flavors led
+                                us to craft the perfect recipe that captures the essence of a Cajun crawfish boil. 🦐🔥
                             </strong>
                         </p>
-						
-						<p>
+
+                        <p>
                             <strong>
-                                Whether you're a devoted boiled peanut enthusiast or a curious foodie looking to embark 
-								on a unique culinary journey, we've got the peanuts for you. Every bite encapsulates the 
-								cherished memories of backyard gatherings and the joy of sharing delicious, handcrafted food 
-								with loved ones.
+                                Whether you're a devoted boiled peanut enthusiast or a curious foodie looking to embark
+                                on a unique culinary journey, we've got the peanuts for you. Every bite encapsulates the
+                                cherished memories of backyard gatherings and the joy of sharing delicious, handcrafted food
+                                with loved ones.
                             </strong>
                         </p>
-						<p>
+                        <p>
                             <strong>
                                 🛒 Start your nutty adventure today! 🥜🔥
                             </strong>
                         </p>
-						
-						<p>
+
+                        <p>
                             <strong >
-								Free delivery to the Prairieville area.
+                                Free delivery to the Prairieville area.
                             </strong>
                         </p>
-						
-						<p>
+
+                        <p>
                             <strong>
-								We carry <span class="text-danger" >Cajun Flavored</span> peanuts that are 
-								available <span class="text-danger" > HOT</span> or <span class="text-primary">COLD</span>.
+                                We carry <span class="text-danger" >Cajun Flavored</span> peanuts that are
+                                available <span class="text-danger" > HOT</span> or <span class="text-primary">COLD</span>.
                             </strong>
                         </p>
-						
-						
-						<a class="btn btn-primary text-uppercase w-100 "
-						   href="#orderform" title="Order Online">
-							<strong class="d-block">
-								Order Online
-							</strong>
-						</a>
-						
-						<img  class="img-fluid mt-4 mb-2" src="./assets/BackToBoil.jpg">
+
+
+                        <a class="btn btn-primary text-uppercase w-100 "
+                           onclick="RecordExternalClick('order online', 'header')"
+                           href="https://forms.gle/Ld9PyRjF1KjoTsSZ7"
+                           target="_blank" rel="noreferrer noopener" title="External Link - Order Online">
+                            <strong class="d-block">
+                                Order Online
+                            </strong>
+                        </a>
+
+                        <img  class="img-fluid mt-4 mb-2" src="./assets/BackToBoil.jpg">
                     </div>
                     <div class="col-md-6">
                         <img  class="img-fluid" src="./assets/Flier.PNG">
@@ -200,74 +172,31 @@
 
         </div>
     </div>
-	
-	<div class="row mt-4">
+
+    <div class="row mt-4">
         <div class="col-12">
             <div class="card bg-white">
                 <div class="card-body d-md-flex">
-                    
+
                     <div class="col-md-4 p-3 align-text-bottom" style="align-items: center;">
-                        
-						<img  class="img-fluid" src="./assets/Sacks.jpg">
+
+                        <img  class="img-fluid" src="./assets/Sacks.jpg">
                     </div>
-					<div class="col-md-4 p-3">
-                        
-						<img  class="img-fluid" src="./assets/RollingBoil.jpg">
+                    <div class="col-md-4 p-3">
+
+                        <img  class="img-fluid" src="./assets/RollingBoil.jpg">
                     </div>
-					<div class="col-md-4 p-3">
-                        
-						<img  class="img-fluid" src="./assets/PouringIn.jpg">
+                    <div class="col-md-4 p-3">
+
+                        <img  class="img-fluid" src="./assets/PouringIn.jpg">
                     </div>
-				
+
                 </div>
             </div>
 
         </div>
     </div>
-    <div class="row mt-4" id="orderform">
-        <div class="col-12">
-            <div class="card bg-white p-4">
-                <h2>Order Online</h2>
-                <form onsubmit="return false">
-                    <div class="mb-2">
-                        <label for="quantity" class="form-label">Quarts Of Cajun Boiled Peanuts</label>
-                        <input id="quantity" type="number" class="form-control"/>
-                    </div>
-                    <div class="mb-2">
-                        <label for="name" class="form-label">Name</label>
-                        <input id="name" class="form-control"/>
-                    </div>
-                    <div class="mb-2">
-                        <label for="phone" class="form-label">Phone</label>
-                        <input id="phone" class="form-control"/>
-                    </div>
-                    <div class="mb-4">
-                        <label for="address" class="form-label">Delivery Address</label>
-                        <input id="address" class="form-control"/>
-                        <div class="form-text">Our Delivery Area Includes Prairieville, Gonzales, Geismar, Galvez, and Duplessis.</div>
-                    </div>
 
-                    <div class="form-check form-switch mb-4">
-                        <input id="preorder" class="form-check-input" type="checkbox">
-                        <label class="form-check-label" for="preorder">This Is A Preorder For Farmers Market</label>
-                    </div>
-                    <div class="mb-2">
-                        <label for="notes" class="form-label">Notes</label>
-                        <input id="notes" class="form-control"/>
-                    </div>
-                    <div>
-                        <p>Payment is due at time of delivery.<br/>We Accept Cash, Card, Venmo, or Cashapp.</p>
-                    </div>
-                    <div>
-                        <button onclick="submitorder()" class="btn btn-primary">Place Order</button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-
-	
 </div>
 <footer class="footer mt-auto py-3 bg-light">
     <div class="container">
@@ -283,7 +212,7 @@
                 </div>
             </div>
         </div>
-		
+
         <div class="row">
             <div class="col-12">
                 <div><strong>Swamp Nuts</strong></div>
@@ -292,14 +221,14 @@
             </div>
 
         </div>
-		<div class="row mt-4">
+        <div class="row mt-4">
             <div class="col-12">
                 <div><strong>Our Friends</strong></div>
                 <div>Art By <a target="_blank" rel="noreferrer noopener" title="External Link - Artctype (Artist/Freelance Animator)" href="https://www.instagram.com/artctype/">Artctype (Artist/Freelance Animator)</a></div>
             </div>
 
         </div>
-		
+
     </div>
 </footer>
 </body>
