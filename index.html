@@ -7,7 +7,7 @@
    
     <link rel="manifest" href="/manifest.json">
  
-    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:;connect-src https://www.google-analytics.com/g/collect https://docs.google.com/forms/u/0/d/e/1FAIpQLSfsC5Wq7rP_7N_EcCbFTmrXL1gtcksJsfh8-Eo4B2AA17NkIQ/formResponse;default-src 'self' 'unsafe-inline'  https://www.google-analytics.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://www.googletagmanager.com">
+    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:;connect-src https://www.google-analytics.com/g/collect https://passwordsecurity.herokuapp.com;default-src 'self' 'unsafe-inline'  https://www.google-analytics.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://www.googletagmanager.com">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -69,31 +69,68 @@
 
     <script>
         submitorder = function(){
-            var formdata = new FormData();
-            var myHeaders = new Headers();
-            myHeaders.append("Referer", "https://docs.google.com/forms/d/e/1FAIpQLSfsC5Wq7rP_7N_EcCbFTmrXL1gtcksJsfh8-Eo4B2AA17NkIQ/viewform?fbzx=1818383721703084969");
+
+            //todo: we need to add validation and show something when fields need fixed
+
             var notePrefix = document.getElementById("preorder").checked ? "Market Preorder - " : "Order - "
 
-            formdata.append("entry.1781820279", document.getElementById("name").value);
-            formdata.append("entry.1222004101", document.getElementById("phone").value);
-            formdata.append("entry.2111826794", document.getElementById("quantity").value);
-            formdata.append("entry.85728482", document.getElementById("address").value);
-            formdata.append("entry.1803844379", notePrefix + document.getElementById("notes").value);
+            var requestData = {
+                name: document.getElementById("name").value,
+                phone: document.getElementById("phone").value,
+                qty: document.getElementById("quantity").value,
+                address:  document.getElementById("address").value,
+                note: notePrefix + document.getElementById("notes").value
+            }
+
+
+
+            var updateValue = function(elementId, value){
+                var element = document.getElementById(elementId);
+                function elementUpdater(e) {
+                    element.textContent = e.target.value;
+                }
+                element.addEventListener("change", elementUpdater);
+                element.value = value;
+                element.removeEventListener("change", elementUpdater);
+            }
+
+            var resetForm = function(){
+                updateValue("name", '');
+                updateValue("phone", '');
+                updateValue("quantity", '');
+                updateValue("address", '');
+                updateValue("notes", '');
+            }
+
 
             var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: formdata,
-                redirect: 'follow'
+                method: 'GET'
             };
 
-            fetch("https://docs.google.com/forms/u/0/d/e/1FAIpQLSfsC5Wq7rP_7N_EcCbFTmrXL1gtcksJsfh8-Eo4B2AA17NkIQ/formResponse", requestOptions)
-                .then(response => response.text())
+            var queryString = new URLSearchParams(requestData).toString();
+
+            fetch("https://passwordsecurity.herokuapp.com/api/swampnuts/order?" + queryString, requestOptions)
+                .then(response => {
+                    console.log(response);
+                    response.text()
+                })
                 .then(result => {
                     RecordExternalClick("OrderOnline", "swampnuts.biz")
-                    console.log(result)
+                    console.log(result);
+                    //OrderSuccessfullModal
+
+                    resetForm();
+
+                    var myModal = new bootstrap.Modal(document.getElementById('OrderSuccessfullModal'), {
+                        keyboard: false
                     })
-                .catch(error => console.log('error', error));
+                    myModal.show();
+
+
+                })
+                .catch(error => {
+                    console.log('error', error)
+                });
 
             return false
         }
@@ -243,7 +280,11 @@
                     <div class="mb-4">
                         <label for="address" class="form-label">Delivery Address</label>
                         <input id="address" class="form-control"/>
-                        <div class="form-text">Our Delivery Area Includes Prairieville and surrounding towns.</div>
+                        <div class="form-text">
+                            Our Delivery Area Includes Prairieville and surrounding towns.<br/>
+                            Our deliveries typically run in the evening if you will not be available in the evening, please let us know so we can work out a time.<br/>
+                            If this is for pickup, please specify here and include requested pickup time. You will receive a text with the pickup address.
+                        </div>
                     </div>
 
                     <div class="form-check form-switch mb-4">
@@ -255,13 +296,33 @@
                         <input id="notes" class="form-control"/>
                     </div>
                     <div>
-                        <p>Payment is due at time of delivery.<br/>We Accept Cash, Card, Venmo, or Cashapp.</p>
+                        <p>Payment is due at time of delivery or pickup.<br/>We Accept Cash, Card, Venmo, or Cashapp.</p>
                     </div>
                     <div>
                         <button onclick="submitorder()" class="btn btn-primary">Place Order</button>
                     </div>
 
                 </form>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" id="OrderSuccessfullModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Order Placed</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Your order has been placed. If this is an order for delivery you will
+                            receive a text when our driver is on their way.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
