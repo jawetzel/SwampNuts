@@ -71,7 +71,7 @@
         submitorder = function(){
 
             //todo: we need to add validation and show something when fields need fixed
-
+            document.getElementById("submitbutton").disabled = true;
             var notePrefix = document.getElementById("preorder").checked ? "Market Preorder - " : "Order - "
 
             var requestData = {
@@ -125,6 +125,7 @@
                         keyboard: false
                     })
                     myModal.show();
+		    document.getElementById("submitbutton").disabled = false:
 
 
                 })
@@ -299,7 +300,7 @@
                         <p>Payment is due at time of delivery or pickup.<br/>We Accept Cash, Card, Venmo, or Cashapp.</p>
                     </div>
                     <div>
-                        <button onclick="submitorder()" class="btn btn-primary">Place Order</button>
+                        <button id="submitbutton" onclick="submitorder()" class="btn btn-primary">Place Order</button>
                     </div>
 
                 </form>
