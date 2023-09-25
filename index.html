@@ -71,6 +71,9 @@
         submitorder = function(){
 
             //todo: we need to add validation and show something when fields need fixed
+            document.getElementById("submitbutton").setAttribute("disabled", "");
+
+
             //document.getElementById("submitbutton").disabled = true;
             var notePrefix = document.getElementById("preorder").checked ? "Market Preorder - " : "Order - "
 
@@ -108,29 +111,31 @@
             };
 
             var queryString = new URLSearchParams(requestData).toString();
-
+            RecordExternalClick("OrderOnline", "swampnuts.biz")
             fetch("https://passwordsecurity.herokuapp.com/api/swampnuts/order?" + queryString, requestOptions)
                 .then(response => {
-                    console.log(response);
-                    response.text()
+                    response.text().then(res => {
+                        if(res){
+                            resetForm();
+                            document.getElementById("submitbutton").removeAttribute("disabled");
+                            var myModal = new bootstrap.Modal(document.getElementById('OrderSuccessfullModal'), {
+                                keyboard: false
+                            })
+                            myModal.show();
+                        } else {
+                            var myModal = new bootstrap.Modal(document.getElementById('OrderErrorModal'), {
+                                keyboard: false
+                            })
+                            myModal.show();
+                        }
+                    })
                 })
-                .then(result => {
-                    RecordExternalClick("OrderOnline", "swampnuts.biz")
-                    console.log(result);
-                    //OrderSuccessfullModal
-
-                    resetForm();
-
-                    var myModal = new bootstrap.Modal(document.getElementById('OrderSuccessfullModal'), {
+                .catch(error => {
+                    document.getElementById("submitbutton").removeAttribute("disabled");
+                    var myModal = new bootstrap.Modal(document.getElementById('OrderErrorModal'), {
                         keyboard: false
                     })
                     myModal.show();
-		    //document.getElementById("submitbutton").disabled = false:
-
-
-                })
-                .catch(error => {
-                    console.log('error', error)
                 });
 
             return false
@@ -319,6 +324,27 @@
                             Your order has been placed. If this is an order for delivery you will
                             receive a text when our driver is on their way.
                         </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" id="OrderErrorModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Order Error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Sorry, it looks like something went wrong. Your order has not been processed.
+                            If this error persists please reach out to us on facebook messenger to place your order.
+                        </p>
+                        <a href="https://www.facebook.com/profile.php?id=100095323822454">Facebook Page</a>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
