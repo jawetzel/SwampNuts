@@ -271,6 +271,22 @@
             <div class="card bg-white p-4">
                 <h2>Order Online</h2>
                 <form onsubmit="return false">
+		    <div id="toolatedisplay" class="text-danger d-none">Orders placed after 6:30pm will be for next day delivery</div>
+		    <script>
+			    var checkPastTime = function(){
+				    var pasttime = new Date().getHours() >= 18;
+				    var element = document.getElementById("toolatedisplay");
+				    var isHidden = element.classList.contains('d-none');
+				    if ((pasttime && !isHidden) || (!pasttime && isHidden)) {
+					    element.classList.toggle('d-none');
+				    }
+			    }
+
+			    checkPastTime();
+			    setInterval(function(){
+				    checkPastTime();
+			    }, 30000)
+		    </script>
                     <div class="mb-2">
                         <label for="quantity" class="form-label">Quarts Of Cajun Boiled Peanuts</label>
                         <input id="quantity" type="number" class="form-control"/>
@@ -293,7 +309,7 @@
                         </div>
                     </div>
 
-                    <div class="form-check form-switch mb-4">
+                    <div class="form-check form-switch mb-4 d-none">
                         <input id="preorder" class="form-check-input" type="checkbox">
                         <label class="form-check-label" for="preorder">This Is A Preorder For Farmers Market</label>
                     </div>
