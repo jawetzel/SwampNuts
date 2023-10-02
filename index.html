@@ -69,24 +69,6 @@
 
     <script>
         submitorder = function(){
-
-            //todo: we need to add validation and show something when fields need fixed
-            document.getElementById("submitbutton").setAttribute("disabled", "");
-
-
-            //document.getElementById("submitbutton").disabled = true;
-            var notePrefix = document.getElementById("preorder").checked ? "Market Preorder - " : "Order - "
-
-            var requestData = {
-                name: document.getElementById("name").value,
-                phone: document.getElementById("phone").value,
-                qty: document.getElementById("quantity").value,
-                address:  document.getElementById("address").value,
-                note: notePrefix + document.getElementById("notes").value
-            }
-
-
-
             var updateValue = function(elementId, value){
                 var element = document.getElementById(elementId);
                 function elementUpdater(e) {
@@ -95,6 +77,20 @@
                 element.addEventListener("change", elementUpdater);
                 element.value = value;
                 element.removeEventListener("change", elementUpdater);
+            }
+
+            //todo: we need to add validation and show something when fields need fixed
+            document.getElementById("submitbutton").setAttribute("disabled", "");
+            document.getElementById("submitbutton").innerHTML = "Processing Order";
+
+            var notePrefix = document.getElementById("preorder").checked ? "Market Preorder - " : "Order - "
+
+            var requestData = {
+                name: document.getElementById("name").value,
+                phone: document.getElementById("phone").value,
+                qty: document.getElementById("quantity").value,
+                address:  document.getElementById("address").value,
+                note: notePrefix + document.getElementById("notes").value
             }
 
             var resetForm = function(){
@@ -114,6 +110,7 @@
             RecordExternalClick("OrderOnline", "swampnuts.biz")
             fetch("https://passwordsecurity.herokuapp.com/api/swampnuts/order?" + queryString, requestOptions)
                 .then(response => {
+                    document.getElementById("submitbutton").innerHTML = "Place Order";
                     response.text().then(res => {
                         if(res){
                             resetForm();
@@ -131,6 +128,7 @@
                     })
                 })
                 .catch(error => {
+                    document.getElementById("submitbutton").innerHTML = "Place Order";
                     document.getElementById("submitbutton").removeAttribute("disabled");
                     var myModal = new bootstrap.Modal(document.getElementById('OrderErrorModal'), {
                         keyboard: false
@@ -271,13 +269,13 @@
             <div class="card bg-white p-4">
                 <h2>Order Online</h2>
                 <form onsubmit="return false">
-		    <div id="toolatedisplay" class="text-danger d-none">Orders placed after 6:30pm will be for next day delivery</div>
+		    <div id="toolatedisplay" class="text-danger large fw-bold mb-2 d-none">Orders placed after 6:00 PM will be for next day delivery</div>
 		    <script>
 			    var checkPastTime = function(){
 				    var pasttime = new Date().getHours() >= 18;
 				    var element = document.getElementById("toolatedisplay");
 				    var isHidden = element.classList.contains('d-none');
-				    if ((pasttime && !isHidden) || (!pasttime && isHidden)) {
+				    if ((pasttime && isHidden) || (!pasttime && !isHidden)) {
 					    element.classList.toggle('d-none');
 				    }
 			    }
@@ -332,14 +330,17 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Order Placed</h5>
+                        <div class="modal-title fs-2 text-success">Order Submitted Successfully</div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <p>
-                            Your order has been placed. If this is an order for delivery you will
-                            receive a text when our driver is on their way.
+                            Your order has been submitted. You should receive a text from us when we process your order
+                            and when our driver is on their way to you.
                         </p>
+                        <p>Deliveries are made in the evenings.</p>
+                        <p>Payment is due at time of Delivery / Pickup.</p>
+                        <b>Thank you for choosing SwampNuts!</b>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -352,7 +353,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Order Error</h5>
+                        <h5 class="modal-title fs-2 text-danger">Order Error</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -389,18 +390,38 @@
 		
         <div class="row">
             <div class="col-12">
-                <div><strong>Swamp Nuts</strong></div>
+                <div class="fs-3"><strong>Swamp Nuts</strong></div>
                 <div>EMAIL: <a href="mailto: service@swampnuts.biz?subject=Question From swampnuts.biz"><strong>service@swampnuts.biz</strong></a></div>
                 <div>Located in Prairieville, La</div>
             </div>
 
         </div>
-		<div class="row mt-4">
-            <div class="col-12">
-                <div><strong>Our Friends</strong></div>
-                <div>Art By <a target="_blank" rel="noreferrer noopener" title="External Link - Artctype (Artist/Freelance Animator)" href="https://www.instagram.com/artctype/">Artctype (Artist/Freelance Animator)</a></div>
-            </div>
+		<div class="row mt-4 d-inline-flex">
+            <div>
+                <div class="mb-2 fs-3"><strong>Our Friends</strong></div>
 
+                <div class="mb-2">
+                    <div class="border-bottom border-2 border-black py-2">
+                        <b>Riverside Farmers Market Of Louisiana</b><br/>
+                        <a target="_blank" rel="noreferrer noopener"
+                           title="External Link - Riverside Farmers Market Of Louisiana Google Maps Address"
+                           href="https://maps.app.goo.gl/xzpEPmnRzXPMKd4VA">45020 Manny Guitrau Rd, Prairieville, LA</a><br/>
+                        <a target="_blank" rel="noreferrer noopener"
+                           title="External Link - Riverside Farmers Market Of Louisiana Facebook Group"
+                           href="https://www.facebook.com/groups/229964358625167">Facebook</a>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <div class="border-bottom border-2 border-black py-2">
+                        Art By
+                        <a target="_blank" rel="noreferrer noopener"
+                           title="External Link - Artctype (Artist/Freelance Animator)"
+                           href="https://www.instagram.com/artctype/">Artctype (Artist/Freelance Animator)</a>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-grow-1">&nbsp;</div>
         </div>
 		
     </div>
