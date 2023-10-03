@@ -80,6 +80,51 @@
             }
 
             //todo: we need to add validation and show something when fields need fixed
+
+            var elements = {
+                name: document.getElementById("name"),
+                phone: document.getElementById("phone"),
+                qty: document.getElementById("quantity"),
+                address:  document.getElementById("address"),
+                note: document.getElementById("notes")
+            };
+            var errors = [];
+
+            if(!elements.name.value || elements.name.value.length === 0){
+                errors.push("Name field is blank");
+            }
+
+            if(!elements.phone.value || elements.phone.value.length === 0){
+                errors.push("Phone number field is blank")
+            } else if(elements.phone.value.length < 7 || !elements.phone.value.match(/^\+?[0-9]\d{1,20}$/)){
+                errors.push("Phone number invalid");
+            }
+
+            if(!elements.qty.value || elements.qty.value < 1) {
+                errors.push("Please enter a value for Quarts Of Cajun Boiled Peanuts");
+            }
+
+            var errorBox = document.getElementById("FormErrorBox");
+            var errorBoxHidden = errorBox.classList.contains('d-none');
+            var errorList = document.getElementById("FormErrorList");
+            if(errors.length > 0) {
+                if (errorBoxHidden) {
+                    errorBox.classList.toggle('d-none');
+                }
+
+                var errorElements = [];
+                errors.forEach(function(error){
+                    errorElements.push(`<li>${error}</li>`)
+                });
+                errorList.innerHTML = errorElements.join('');
+                return;
+            } else {
+                if(!errorBoxHidden) {
+                    errorBox.classList.toggle('d-none');
+                    errorList.innerHTML = '';
+                }
+            }
+
             document.getElementById("submitbutton").setAttribute("disabled", "");
             document.getElementById("submitbutton").innerHTML = "Processing Order";
 
@@ -170,7 +215,7 @@
 					<div class="pt-4 ps-4">
 						<p>
 							We are currently <strong class="text-danger">SOLD OUT</strong>. We cook every Friday. 
-							<a class="btn btn-primary text-uppercase " href="#orderform" title="Order Online"">Preorder today!</a>
+							<a class="btn btn-primary text-uppercase " href="#orderform" title="Order Online">Preorder today!</a>
 						</p>
 					</div>
 				</div>
@@ -318,6 +363,15 @@
                     <div>
                         <p>Payment is due at time of delivery or pickup.<br/>We Accept Cash, Card, Venmo, or Cashapp.</p>
                     </div>
+
+                    <div class="text-danger mb-4 d-none" id="FormErrorBox">
+                        <div>
+                            The order form needs some more information before it can be submitted.
+                        </div>
+                        <ul id="FormErrorList">
+                        </ul>
+                    </div>
+
                     <div>
                         <button id="submitbutton" onclick="submitorder()" class="btn btn-primary">Place Order</button>
                     </div>
