@@ -159,6 +159,11 @@
                     response.text().then(res => {
                         if(res){
                             resetForm();
+
+                            gtag('event', "Order Placed", {
+                                'event_category': location,
+                                'event_label': "Order Placed"});
+
                             document.getElementById("submitbutton").removeAttribute("disabled");
                             var myModal = new bootstrap.Modal(document.getElementById('OrderSuccessfullModal'), {
                                 keyboard: false
