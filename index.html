@@ -68,6 +68,89 @@
     </style>
 
     <script>
+        updateTotalsSection = function(){
+            var elements = {
+                boiled: document.getElementById("quantity"),
+                roasted: document.getElementById("quantityR"),
+                candied: document.getElementById("quantityCa"),
+
+                boiledSubTotalRow: document.getElementById("BoiledSubTotalRow"),
+                boiledSubTotalQty: document.getElementById("BoiledSubTotalQty"),
+                boiledSubTotalPrice: document.getElementById("BoiledSubTotalPrice"),
+
+                roastedSubTotalRow: document.getElementById("RoastedSubTotalRow"),
+                roastedSubTotalQty: document.getElementById("RoastedSubTotalQty"),
+                roastedSubTotalPrice: document.getElementById("RoastedSubTotalPrice"),
+
+                candiedSubTotalRow: document.getElementById("CandiedSubTotalRow"),
+                candiedSubTotalQty: document.getElementById("CandiedSubTotalQty"),
+                candiedSubTotalPrice: document.getElementById("CandiedSubTotalPrice"),
+
+                subTotalPrice: document.getElementById("SubTotalPrice"),
+                subTotalTaxes: document.getElementById("TaxesPrice"),
+                totalPrice: document.getElementById("TotalPrice")
+            }
+
+            var qtys = {
+                boiled: parseInt(elements.boiled.value || 0),
+                roasted: parseInt(elements.roasted.value || 0),
+                candied: parseInt(elements.candied.value || 0),
+                boiledDollars: (parseFloat((elements.boiled.value || 0)) * 8).toFixed(2),
+                roastedDollars: (parseFloat((elements.roasted.value || 0)) * 8).toFixed(2),
+                candiedDollars: (parseFloat((elements.candied.value || 0)) * 8).toFixed(2)
+            };
+
+            if(qtys.boiled === 0){
+                if(!elements.boiledSubTotalRow.classList.contains('d-none')){
+                    elements.boiledSubTotalRow.classList.toggle('d-none');
+                }
+            } else {
+                if(elements.boiledSubTotalRow.classList.contains('d-none')){
+                    elements.boiledSubTotalRow.classList.toggle('d-none');
+                }
+                elements.boiledSubTotalQty.innerText = qtys.boiled;
+                elements.boiledSubTotalPrice.innerText = qtys.boiledDollars;
+            }
+
+            if(qtys.roasted === 0){
+                if(!elements.roastedSubTotalRow.classList.contains('d-none')){
+                    elements.roastedSubTotalRow.classList.toggle('d-none');
+                }
+            } else {
+                if(elements.roastedSubTotalRow.classList.contains('d-none')){
+                    elements.roastedSubTotalRow.classList.toggle('d-none');
+                }
+                elements.roastedSubTotalQty.innerText = qtys.roasted;
+                elements.roastedSubTotalPrice.innerText = qtys.roastedDollars;
+            }
+
+            if(qtys.candied === 0){
+                if(!elements.candiedSubTotalRow.classList.contains('d-none')){
+                    elements.candiedSubTotalRow.classList.toggle('d-none');
+                }
+            } else {
+                if(elements.candiedSubTotalRow.classList.contains('d-none')){
+                    elements.candiedSubTotalRow.classList.toggle('d-none');
+                }
+                elements.candiedSubTotalQty.innerText = qtys.candied;
+                elements.candiedSubTotalPrice.innerText = qtys.candiedDollars;
+            }
+
+            var subTotalNumber = parseFloat(qtys.boiledDollars) +
+                parseFloat(qtys.roastedDollars) +
+                parseFloat(qtys.candiedDollars);
+            var subtotal = (subTotalNumber).toFixed(2);
+            elements.subTotalPrice.innerText = subtotal;
+
+            var taxesNumber = .0945 * subTotalNumber;
+            var taxes = taxesNumber.toFixed(2);
+            elements.subTotalTaxes.innerText = taxes;
+
+            var totalNumber = subTotalNumber + taxesNumber;
+            var total = totalNumber.toFixed(2);
+            elements.totalPrice.innerText = total;
+        }
+
         submitorder = function(){
             var updateValue = function(elementId, value){
                 var element = document.getElementById(elementId);
@@ -85,6 +168,8 @@
                 name: document.getElementById("name"),
                 phone: document.getElementById("phone"),
                 qty: document.getElementById("quantity"),
+                roastedQty: document.getElementById("quantityR"),
+                candiedQty: document.getElementById("quantityCa"),
                 address:  document.getElementById("address"),
                 note: document.getElementById("notes")
             };
@@ -100,8 +185,15 @@
                 errors.push("Phone number invalid");
             }
 
-            if(!elements.qty.value || elements.qty.value < 1) {
-                errors.push("Please enter a value for Quarts Of Cajun Boiled Peanuts");
+
+
+            if(
+                (!elements.qty.value || elements.qty.value < 1) &&
+                (!elements.roastedQty.value || elements.roastedQty.value < 1) &&
+                (!elements.candiedQty.value || elements.candiedQty.value < 1)
+
+            ) {
+                errors.push("Please add at least one item to the cart to place an order");
             }
 
             var errorBox = document.getElementById("FormErrorBox");
@@ -128,12 +220,30 @@
             document.getElementById("submitbutton").setAttribute("disabled", "");
             document.getElementById("submitbutton").innerHTML = "Processing Order";
 
-            var notePrefix = document.getElementById("preorder").checked ? "Market Preorder - " : "Order - "
+            var qtys = {
+                boiled: parseInt(elements.qty.value || 0),
+                roasted: parseInt(elements.roastedQty.value || 0),
+                candied: parseInt(elements.candiedQty.value || 0),
+                boiledDollars: (parseFloat((elements.qty.value || 0)) * 8).toFixed(2),
+                roastedDollars: (parseFloat((elements.roastedQty.value || 0)) * 8).toFixed(2),
+                candiedDollars: (parseFloat((elements.candiedQty.value || 0)) * 8).toFixed(2)
+            };
+            var subTotalNumber = parseFloat(qtys.boiledDollars) +
+                parseFloat(qtys.roastedDollars) +
+                parseFloat(qtys.candiedDollars);
+            var subtotal = (subTotalNumber).toFixed(2);
+
+            var taxesNumber = .0945 * subTotalNumber;
+            var taxes = taxesNumber.toFixed(2);
+
+            var totalNumber = subTotalNumber + taxesNumber;
+            var total = totalNumber.toFixed(2);
+            var notePrefix = `Subtotal: ${subtotal} - Taxes: ${taxes} - Total: ${total} - Notes: `;
 
             var requestData = {
                 name: document.getElementById("name").value,
                 phone: document.getElementById("phone").value,
-                qty: document.getElementById("quantity").value,
+                qty: `Quarts: ${elements.qty.value} - Roasted: ${elements.roastedQty.value} - Candied: ${elements.candiedQty.value}`,
                 address:  document.getElementById("address").value,
                 note: notePrefix + document.getElementById("notes").value
             }
@@ -188,6 +298,8 @@
 
             return false
         }
+
+
     </script>
 
 </head>
@@ -314,10 +426,11 @@
 
         </div>
     </div>
+
     <div class="row mt-4" id="orderform">
         <div class="col-12">
             <div class="card bg-white p-4">
-                <h2>Order Online</h2>
+                <h2 class="fs-1">Order Online</h2>
                 <form onsubmit="return false">
 		    <div id="toolatedisplay" class="text-danger large fw-bold mb-2 d-none">Orders placed after 6:00 PM will be for next day delivery</div>
 		    <script>
@@ -335,20 +448,55 @@
 				    checkPastTime();
 			    }, 30000)
 		    </script>
-                    <div class="mb-2">
-                        <label for="quantity" class="form-label">Quarts Of Cajun Boiled Peanuts</label>
-                        <input id="quantity" type="number" class="form-control"/>
+                    <div class="row">
+                        <div class="mb-4 col-lg-3 col-md-4 col-sm-6 p-3 border border-light-subtle">
+                            <label for="quantity" class="form-label fs-5 fw-bolder mb-0">Cajun Boiled Peanuts</label>
+                            <br/>
+                            <span class="text-success fw-bold">$8.00 / Quart</span>
+                            <div class="pb-2">
+                                <img src="./assets/Boiled.jpg" class="img-fluid">
+                            </div>
+                            <div>
+                                <strong># of Quarts</strong>
+                                <input onchange="updateTotalsSection()" id="quantity" type="number" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 col-lg-3 col-md-4 col-sm-6 p-3 border border-light-subtle">
+                            <label for="quantityR" class="form-label fs-5 fw-bolder mb-0">Roasted Peanuts</label>
+                            <br/>
+                            <span class="text-success fw-bold">$8.00 / Container</span>
+                            <div class="pb-2">
+                                <img src="./assets/Roasted.jpg" class="img-fluid">
+                            </div>
+                            <div>
+                                <strong># of Containers</strong> <span class="small">(12oz)</span><input onchange="updateTotalsSection()" id="quantityR" type="number" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 col-lg-3 col-md-4 col-sm-6 p-3 border border-light-subtle">
+                            <label for="quantityCa" class="form-label fs-5 fw-bolder mb-0">Candied Peanuts</label>
+                            <br/>
+                            <span class="text-success fw-bold">$8.00 / Container</span>
+                            <div class="pb-2">
+                                <img src="./assets/Candied.jpg" class="img-fluid">
+                            </div>
+                            <div>
+                                <strong># of Containers</strong> <span class="small">(12oz)</span><input onchange="updateTotalsSection()" id="quantityCa" type="number" class="form-control"/>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="mb-2">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label"><strong>Name</strong></label>
                         <input id="name" class="form-control"/>
                     </div>
                     <div class="mb-2">
-                        <label for="phone" class="form-label">Phone</label>
+                        <label for="phone" class="form-label"><strong>Phone</strong></label>
                         <input id="phone" class="form-control"/>
                     </div>
                     <div class="mb-4">
-                        <label for="address" class="form-label">Delivery Address</label>
+                        <label for="address" class="form-label"><strong>Delivery Address</strong></label>
                         <input id="address" class="form-control"/>
                         <div class="form-text">
                             Our Delivery Area Includes Prairieville and surrounding towns.<br/>
@@ -357,12 +505,8 @@
                         </div>
                     </div>
 
-                    <div class="form-check form-switch mb-4 d-none">
-                        <input id="preorder" class="form-check-input" type="checkbox">
-                        <label class="form-check-label" for="preorder">This Is A Preorder For Farmers Market</label>
-                    </div>
                     <div class="mb-2">
-                        <label for="notes" class="form-label">Notes</label>
+                        <label for="notes" class="form-label"><strong>Notes</strong></label>
                         <input id="notes" class="form-control"/>
                     </div>
                     <div>
@@ -376,6 +520,62 @@
                         <ul id="FormErrorList">
                         </ul>
                     </div>
+
+
+                    <div >
+                        <div class="d-inline-block border border-black p-2">
+                            <table>
+                                <thead>
+                                <tr class="border-black border-bottom">
+                                    <th class="pe-2">
+                                        Qty
+                                    </th>
+                                    <th>
+                                        Item
+                                    </th>
+                                    <th>
+                                        Price
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="table table-bordered">
+                                <tr id="BoiledSubTotalRow" class="d-none">
+                                    <td class="fw-bold" id="BoiledSubTotalQty">0</td>
+                                    <td class="pe-2">Quarts Cajun Boiled Peanuts</td>
+                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="BoiledSubTotalPrice"></span></td>
+                                </tr>
+                                <tr id="RoastedSubTotalRow" class="d-none">
+                                    <td class="fw-bold" id="RoastedSubTotalQty">0</td>
+                                    <td  class="pe-2">Roasted Peanuts <span class="small">(12oz)</span></td>
+                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="RoastedSubTotalPrice"></span></td>
+                                </tr>
+                                <tr id="CandiedSubTotalRow" class="d-none">
+                                    <td id="CandiedSubTotalQty" class="fw-bold">0</td>
+                                    <td class="pe-2">Candied Peanuts <span class="small">(12oz)</span></td>
+                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="CandiedSubTotalPrice"></span></td>
+                                </tr>
+
+                                </tbody>
+                                <tfoot class="table table-bordered">
+                                <tr class="text-success">
+                                    <td colspan="2" class="fw-bolder pe-2 text-end">Subtotal</td>
+                                    <td class="fw-bolder text-end">$<span class="p-0 text-end" id="SubTotalPrice">0.00</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="pe-2 text-end">Taxes (9.45%)</td>
+                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="TaxesPrice">0.00</span></td>
+                                </tr>
+                                <tr class="text-danger">
+                                    <td colspan="2" class="fw-bolder pe-2 text-end">Total</td>
+                                    <td class="fw-bolder text-end">$<span class="p-0" id="TotalPrice">0.00</span></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+
+                    </div>
+
 
                     <div>
                         <button id="submitbutton" onclick="submitorder()" class="btn btn-primary">Place Order</button>
