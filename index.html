@@ -71,20 +71,30 @@
         updateTotalsSection = function(){
             var elements = {
                 boiled: document.getElementById("quantity"),
-                roasted: document.getElementById("quantityR"),
-                candied: document.getElementById("quantityCa"),
+                roastedL: document.getElementById("quantityRl"),
+                roastedS: document.getElementById("quantityRs"),
+
+                candiedL: document.getElementById("quantityCaL"),
+                candiedS: document.getElementById("quantityCaS"),
 
                 boiledSubTotalRow: document.getElementById("BoiledSubTotalRow"),
                 boiledSubTotalQty: document.getElementById("BoiledSubTotalQty"),
                 boiledSubTotalPrice: document.getElementById("BoiledSubTotalPrice"),
 
-                roastedSubTotalRow: document.getElementById("RoastedSubTotalRow"),
-                roastedSubTotalQty: document.getElementById("RoastedSubTotalQty"),
-                roastedSubTotalPrice: document.getElementById("RoastedSubTotalPrice"),
+                roastedLSubTotalRow: document.getElementById("RoastedLSubTotalRow"),
+                roastedSSubTotalRow: document.getElementById("RoastedSSubTotalRow"),
+                roastedLSubTotalQty: document.getElementById("RoastedLSubTotalQty"),
+                roastedSSubTotalQty: document.getElementById("RoastedSSubTotalQty"),
+                roastedLSubTotalPrice: document.getElementById("RoastedLSubTotalPrice"),
+                roastedSSubTotalPrice: document.getElementById("RoastedSSubTotalPrice"),
 
-                candiedSubTotalRow: document.getElementById("CandiedSubTotalRow"),
-                candiedSubTotalQty: document.getElementById("CandiedSubTotalQty"),
-                candiedSubTotalPrice: document.getElementById("CandiedSubTotalPrice"),
+                candiedLSubTotalRow: document.getElementById("CandiedLSubTotalRow"),
+                candiedLSubTotalQty: document.getElementById("CandiedLSubTotalQty"),
+                candiedLSubTotalPrice: document.getElementById("CandiedLSubTotalPrice"),
+
+                candiedSSubTotalRow: document.getElementById("CandiedSSubTotalRow"),
+                candiedSSubTotalQty: document.getElementById("CandiedSSubTotalQty"),
+                candiedSSubTotalPrice: document.getElementById("CandiedSSubTotalPrice"),
 
                 subTotalPrice: document.getElementById("SubTotalPrice"),
                 subTotalTaxes: document.getElementById("TaxesPrice"),
@@ -93,11 +103,15 @@
 
             var qtys = {
                 boiled: parseInt(elements.boiled.value || 0),
-                roasted: parseInt(elements.roasted.value || 0),
-                candied: parseInt(elements.candied.value || 0),
+                roastedL: parseInt(elements.roastedL.value || 0),
+                roastedS: parseInt(elements.roastedS.value || 0),
+                candiedL: parseInt(elements.candiedL.value || 0),
+                candiedS: parseInt(elements.candiedS.value || 0),
                 boiledDollars: (parseFloat((elements.boiled.value || 0)) * 8).toFixed(2),
-                roastedDollars: (parseFloat((elements.roasted.value || 0)) * 8).toFixed(2),
-                candiedDollars: (parseFloat((elements.candied.value || 0)) * 8).toFixed(2)
+                roastedLDollars: (parseFloat((elements.roastedL.value || 0)) * 10).toFixed(2),
+                roastedSDollars: (parseFloat((elements.roastedS.value || 0)) * 6).toFixed(2),
+                candiedLDollars: (parseFloat((elements.candiedL.value || 0)) * 10).toFixed(2),
+                candiedSDollars: (parseFloat((elements.candiedS.value || 0)) * 6).toFixed(2)
             };
 
             if(qtys.boiled === 0){
@@ -112,33 +126,60 @@
                 elements.boiledSubTotalPrice.innerText = qtys.boiledDollars;
             }
 
-            if(qtys.roasted === 0){
-                if(!elements.roastedSubTotalRow.classList.contains('d-none')){
-                    elements.roastedSubTotalRow.classList.toggle('d-none');
+            if(qtys.roastedL === 0){
+                if(!elements.roastedLSubTotalRow.classList.contains('d-none')){
+                    elements.roastedLSubTotalRow.classList.toggle('d-none');
                 }
             } else {
-                if(elements.roastedSubTotalRow.classList.contains('d-none')){
-                    elements.roastedSubTotalRow.classList.toggle('d-none');
+                if(elements.roastedLSubTotalRow.classList.contains('d-none')){
+                    elements.roastedLSubTotalRow.classList.toggle('d-none');
                 }
-                elements.roastedSubTotalQty.innerText = qtys.roasted;
-                elements.roastedSubTotalPrice.innerText = qtys.roastedDollars;
+                elements.roastedLSubTotalQty.innerText = qtys.roastedL;
+                elements.roastedLSubTotalPrice.innerText = qtys.roastedLDollars;
             }
 
-            if(qtys.candied === 0){
-                if(!elements.candiedSubTotalRow.classList.contains('d-none')){
-                    elements.candiedSubTotalRow.classList.toggle('d-none');
+            if(qtys.roastedS === 0){
+                if(!elements.roastedSSubTotalRow.classList.contains('d-none')){
+                    elements.roastedSSubTotalRow.classList.toggle('d-none');
                 }
             } else {
-                if(elements.candiedSubTotalRow.classList.contains('d-none')){
-                    elements.candiedSubTotalRow.classList.toggle('d-none');
+                if(elements.roastedSSubTotalRow.classList.contains('d-none')){
+                    elements.roastedSSubTotalRow.classList.toggle('d-none');
                 }
-                elements.candiedSubTotalQty.innerText = qtys.candied;
-                elements.candiedSubTotalPrice.innerText = qtys.candiedDollars;
+                elements.roastedSSubTotalQty.innerText = qtys.roastedS;
+                elements.roastedSSubTotalPrice.innerText = qtys.roastedSDollars;
+            }
+
+
+            if(qtys.candiedL === 0){
+                if(!elements.candiedLSubTotalRow.classList.contains('d-none')){
+                    elements.candiedLSubTotalRow.classList.toggle('d-none');
+                }
+            } else {
+                if(elements.candiedLSubTotalRow.classList.contains('d-none')){
+                    elements.candiedLSubTotalRow.classList.toggle('d-none');
+                }
+                elements.candiedLSubTotalQty.innerText = qtys.candiedL;
+                elements.candiedLSubTotalPrice.innerText = qtys.candiedLDollars;
+            }
+
+            if(qtys.candiedS === 0){
+                if(!elements.candiedSSubTotalRow.classList.contains('d-none')){
+                    elements.candiedSSubTotalRow.classList.toggle('d-none');
+                }
+            } else {
+                if(elements.candiedSSubTotalRow.classList.contains('d-none')){
+                    elements.candiedSSubTotalRow.classList.toggle('d-none');
+                }
+                elements.candiedSSubTotalQty.innerText = qtys.candiedS;
+                elements.candiedSSubTotalPrice.innerText = qtys.candiedSDollars;
             }
 
             var subTotalNumber = parseFloat(qtys.boiledDollars) +
-                parseFloat(qtys.roastedDollars) +
-                parseFloat(qtys.candiedDollars);
+                parseFloat(qtys.roastedLDollars) +
+                parseFloat(qtys.roastedSDollars) +
+                parseFloat(qtys.candiedLDollars) +
+                parseFloat(qtys.candiedSDollars);
             var subtotal = (subTotalNumber).toFixed(2);
             elements.subTotalPrice.innerText = subtotal;
 
@@ -169,8 +210,13 @@
                 email: document.getElementById("email"),
                 phone: document.getElementById("phone"),
                 qty: document.getElementById("quantity"),
-                roastedQty: document.getElementById("quantityR"),
-                candiedQty: document.getElementById("quantityCa"),
+
+                roastedLQty: document.getElementById("quantityRl"),
+                roastedSQty: document.getElementById("quantityRs"),
+
+                candiedLQty: document.getElementById("quantityCaL"),
+                candiedSQty: document.getElementById("quantityCaS"),
+
                 address:  document.getElementById("address"),
                 note: document.getElementById("notes")
             };
@@ -190,9 +236,10 @@
 
             if(
                 (!elements.qty.value || elements.qty.value < 1) &&
-                (!elements.roastedQty.value || elements.roastedQty.value < 1) &&
-                (!elements.candiedQty.value || elements.candiedQty.value < 1)
-
+                (!elements.roastedLQty.value || elements.roastedLQty.value < 1) &&
+                (!elements.roastedSQty.value || elements.roastedSQty.value < 1) &&
+                (!elements.candiedLQty.value || elements.candiedLQty.value < 1) &&
+                (!elements.candiedSQty.value || elements.candiedSQty.value < 1)
             ) {
                 errors.push("Please add at least one item to the cart to place an order");
             }
@@ -223,15 +270,21 @@
 
             var qtys = {
                 boiled: parseInt(elements.qty.value || 0),
-                roasted: parseInt(elements.roastedQty.value || 0),
-                candied: parseInt(elements.candiedQty.value || 0),
+                roastedL: parseInt(elements.roastedLQty.value || 0),
+                roastedS: parseInt(elements.roastedSQty.value || 0),
+                candiedL: parseInt(elements.candiedLQty.value || 0),
+                candiedS: parseInt(elements.candiedSQty.value || 0),
                 boiledDollars: (parseFloat((elements.qty.value || 0)) * 8).toFixed(2),
-                roastedDollars: (parseFloat((elements.roastedQty.value || 0)) * 8).toFixed(2),
-                candiedDollars: (parseFloat((elements.candiedQty.value || 0)) * 8).toFixed(2)
+                roastedLDollars: (parseFloat((elements.roastedLQty.value || 0)) * 10).toFixed(2),
+                roastedSDollars: (parseFloat((elements.roastedSQty.value || 0)) * 6).toFixed(2),
+                candiedLDollars: (parseFloat((elements.candiedLQty.value || 0)) * 10).toFixed(2),
+                candiedSDollars: (parseFloat((elements.candiedSQty.value || 0)) * 6).toFixed(2)
             };
             var subTotalNumber = parseFloat(qtys.boiledDollars) +
-                parseFloat(qtys.roastedDollars) +
-                parseFloat(qtys.candiedDollars);
+                parseFloat(qtys.roastedLDollars) +
+                parseFloat(qtys.roastedSDollars) +
+                parseFloat(qtys.candiedLDollars) +
+                parseFloat(qtys.candiedSDollars);
             var subtotal = (subTotalNumber).toFixed(2);
 
             var taxesNumber = .0945 * subTotalNumber;
@@ -244,7 +297,9 @@
             var requestData = {
                 name: document.getElementById("name").value + " - " + document.getElementById("email").value,
                 phone: document.getElementById("phone").value,
-                qty: `Quarts: ${elements.qty.value} - Roasted: ${elements.roastedQty.value} - Candied: ${elements.candiedQty.value}`,
+                qty: `Quarts: ${elements.qty.value} - ` +
+                        `RoastedL: ${elements.roastedLQty.value} - RoastedS: ${elements.roastedSQty.value} - ` +
+                        `CandiedL: ${elements.candiedLQty.value} - CandiedS: ${elements.candiedSQty.value}`,
                 address:  document.getElementById("address").value,
                 note: notePrefix + document.getElementById("notes").value
             }
@@ -253,8 +308,10 @@
                 updateValue("name", '');
                 updateValue("phone", '');
                 updateValue("quantity", '');
-                updateValue("quantityR", '');
-                updateValue("quantityCa", '');
+                updateValue("quantityRs", '');
+                updateValue("quantityRl", '');
+                updateValue("quantityCaL", '');
+                updateValue("quantityCaS", '');
                 updateValue("address", '');
                 updateValue("notes", '');
                 updateTotalsSection();
@@ -477,35 +534,63 @@
                         <div class="mb-4 col-lg-3 col-md-4 col-sm-6 p-3 border border-light-subtle">
                             <label for="quantity" class="form-label fs-5 fw-bolder mb-0">Cajun Boiled Peanuts</label>
                             <br/>
-                            <span class="text-success fw-bold">$8.00 / Quart</span>
                             <div class="pb-2">
                                 <img src="./assets/Boiled.jpg" class="img-fluid">
                             </div>
-                            <div>
+                            <div class="form form-control">
+                                <div>
+                                    <span class="fw-bold text-success">$8.00 - QUART </span>
+                                </div>
                                 <strong># of Quarts</strong>
                                 <input onchange="updateTotalsSection()" id="quantity" type="number" class="form-control"/>
                             </div>
                         </div>
                         <div class="mb-4 col-lg-3 col-md-4 col-sm-6 p-3 border border-light-subtle">
-                            <label for="quantityCa" class="form-label fs-5 fw-bolder mb-0">Candied Peanuts</label>
+                            <label class="form-label fs-5 fw-bolder mb-0">Candied Peanuts</label>
                             <br/>
-                            <span class="text-success fw-bold">$8.00 / Container</span>
                             <div class="pb-2">
                                 <img src="./assets/Candied.jpg" class="img-fluid">
                             </div>
-                            <div>
-                                <strong># of Containers</strong> <span class="small">(12 fl oz)</span><input onchange="updateTotalsSection()" id="quantityCa" type="number" class="form-control"/>
+                            <div class="form form-control">
+                                <div>
+                                    <span class="fw-bold text-success">$10.00 - PINT </span>
+                                </div>
+                                <label for="quantityCaL"><strong># of Containers</strong></label>
+                                <input onchange="updateTotalsSection()" id="quantityCaL" type="number" class="form-control"/>
                             </div>
+
+                            <div class="form form-control mt-2">
+                                <div>
+                                    <span class="fw-bold text-success">$6.00 - CUP </span>
+                                </div>
+                                <label for="quantityCaS"><strong># of Containers</strong></label>
+                                <input onchange="updateTotalsSection()" id="quantityCaS" type="number" class="form-control"/>
+                            </div>
+
                         </div>
                         <div class="mb-4 col-lg-3 col-md-4 col-sm-6 p-3 border border-light-subtle">
-                            <label for="quantityR" class="form-label fs-5 fw-bolder mb-0">Roasted Peanuts</label>
+                            <label class="form-label fs-5 fw-bolder mb-0">Roasted Peanuts</label>
                             <br/>
-                            <span class="text-success fw-bold">$8.00 / Container</span>
                             <div class="pb-2">
                                 <img src="./assets/Roasted.jpg" class="img-fluid">
                             </div>
                             <div>
-                                <strong># of Containers</strong> <span class="small">(12 fl oz)</span><input onchange="updateTotalsSection()" id="quantityR" type="number" class="form-control"/>
+
+                                <div class="form form-control">
+                                    <div>
+                                        <span class="fw-bold text-success">$10.00 - PINT </span>
+                                    </div>
+                                    <label for="quantityRl"><strong># of Containers</strong></label>
+                                    <input onchange="updateTotalsSection()" id="quantityRl" type="number" class="form-control"/>
+                                </div>
+
+                                <div class="form form-control mt-2">
+                                    <div>
+                                        <span class="fw-bold text-success">$6.00 - CUP </span>
+                                    </div>
+                                    <label for="quantityRs"><strong># of Containers</strong></label>
+                                    <input onchange="updateTotalsSection()" id="quantityRs" type="number" class="form-control"/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -571,16 +656,32 @@
                                     <td class="pe-2">Quarts Cajun Boiled Peanuts</td>
                                     <td class="fw-bold text-end">$<span class="p-0 text-end" id="BoiledSubTotalPrice"></span></td>
                                 </tr>
-                                <tr id="RoastedSubTotalRow" class="d-none">
-                                    <td class="fw-bold" id="RoastedSubTotalQty">0</td>
+
+
+                                <tr id="RoastedLSubTotalRow" class="d-none">
+                                    <td class="fw-bold" id="RoastedLSubTotalQty">0</td>
                                     <td  class="pe-2">Roasted Peanuts <span class="small">(12oz)</span></td>
-                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="RoastedSubTotalPrice"></span></td>
+                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="RoastedLSubTotalPrice"></span></td>
                                 </tr>
-                                <tr id="CandiedSubTotalRow" class="d-none">
-                                    <td id="CandiedSubTotalQty" class="fw-bold">0</td>
-                                    <td class="pe-2">Candied Peanuts <span class="small">(12oz)</span></td>
-                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="CandiedSubTotalPrice"></span></td>
+                                <tr id="RoastedSSubTotalRow" class="d-none">
+                                    <td class="fw-bold" id="RoastedSSubTotalQty">0</td>
+                                    <td  class="pe-2">Roasted Peanuts <span class="small">(6oz)</span></td>
+                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="RoastedSSubTotalPrice"></span></td>
                                 </tr>
+
+
+                                <tr id="CandiedLSubTotalRow" class="d-none">
+                                    <td id="CandiedLSubTotalQty" class="fw-bold">0</td>
+                                    <td class="pe-2">Candied Peanuts <span class="small">(11oz)</span></td>
+                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="CandiedLSubTotalPrice"></span></td>
+                                </tr>
+                                <tr id="CandiedSSubTotalRow" class="d-none">
+                                    <td id="CandiedSSubTotalQty" class="fw-bold">0</td>
+                                    <td class="pe-2">Candied Peanuts <span class="small">(6oz)</span></td>
+                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="CandiedSSubTotalPrice"></span></td>
+                                </tr>
+
+
 
                                 </tbody>
                                 <tfoot class="table table-bordered">
