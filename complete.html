@@ -294,6 +294,48 @@
             var total = totalNumber.toFixed(2);
             var notePrefix = `Subtotal: ${subtotal} - Taxes: ${taxes} - Total: ${total} - Notes: `;
 
+            var gtagPurchaceItems = [];
+            if(qtys.boiled > 0){
+                gtagPurchaceItems.push({
+                    item_id: "boiled",
+                    item_name: "boiled",
+                    price: qtys.boiledDollars,
+                    quantity: qtys.boiled
+                })
+            }
+            if(qtys.roastedL > 0){
+                gtagPurchaceItems.push({
+                    item_id: "roastedL",
+                    item_name: "roastedL",
+                    price: qtys.roastedLDollars,
+                    quantity: qtys.roastedL
+                })
+            }
+            if(qtys.roastedS > 0){
+                gtagPurchaceItems.push({
+                    item_id: "roastedS",
+                    item_name: "roastedS",
+                    price: qtys.roastedSDollars,
+                    quantity: qtys.roastedS
+                })
+            }
+            if(qtys.candiedL > 0){
+                gtagPurchaceItems.push({
+                    item_id: "candiedL",
+                    item_name: "candiedL",
+                    price: qtys.candiedLDollars,
+                    quantity: qtys.candiedL
+                })
+            }
+            if(qtys.candiedS > 0){
+                gtagPurchaceItems.push({
+                    item_id: "candiedS",
+                    item_name: "candiedS",
+                    price: qtys.candiedSDollars,
+                    quantity: qtys.candiedS
+                })
+            }
+
             var requestData = {
                 name: document.getElementById("name").value + " - " + document.getElementById("email").value,
                 phone: document.getElementById("phone").value,
@@ -331,9 +373,11 @@
                         if(res){
                             resetForm();
 
-                            gtag('event', "Order Placed", {
-                                'event_category': location,
-                                'event_label': "Order Placed"});
+                            gtag("event", "purchase", {
+                                value: subtotal,
+                                currency: "USD",
+                                items: [gtagPurchaceItems]
+                            });
 
                             document.getElementById("submitbutton").removeAttribute("disabled");
                             document.location.href = "https://swampnuts.biz/complete";
