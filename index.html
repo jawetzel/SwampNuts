@@ -336,10 +336,7 @@
                                 'event_label': "Order Placed"});
 
                             document.getElementById("submitbutton").removeAttribute("disabled");
-                            var myModal = new bootstrap.Modal(document.getElementById('OrderSuccessfullModal'), {
-                                keyboard: false
-                            })
-                            myModal.show();
+                            document.location.href = "https://swampnuts.biz/complete";
                         } else {
                             var myModal = new bootstrap.Modal(document.getElementById('OrderErrorModal'), {
                                 keyboard: false
@@ -509,23 +506,6 @@
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card bg-white p-4">
-                <h2 class="fs-1">Event Schedule</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h3>Upcoming Events</h3>
-                        <ul id="upcomingEvents"></ul>
-                    </div>
-                    <div class="col-md-6">
-                        <h3>Past Events</h3>
-                        <ul id="pastEvents"></ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="row mt-4" id="orderform">
         <div class="col-12">
@@ -729,29 +709,6 @@
                     </div>
 
                 </form>
-            </div>
-        </div>
-
-        <div class="modal" tabindex="-1" id="OrderSuccessfullModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="modal-title fs-2 text-success">Order Submitted Successfully</div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            Your order has been submitted. You should receive a text from us when we process your order
-                            and when our driver is on their way to you.
-                        </p>
-                        <p>Deliveries are made in the evenings.</p>
-                        <p>Payment is due at time of Delivery / Pickup.</p>
-                        <b>Thank you for choosing SwampNuts!</b>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
             </div>
         </div>
 
