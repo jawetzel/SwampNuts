@@ -7,7 +7,13 @@
    
     <link rel="manifest" href="/manifest.json">
  
-    <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:;connect-src https://www.google-analytics.com/g/collect https://passwordsecurity.herokuapp.com;default-src 'self' 'unsafe-inline'  https://www.google-analytics.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://www.googletagmanager.com">
+    <meta http-equiv="Content-Security-Policy" 
+		content="img-src https://www.google.com/pagead/ www.google.com 'self' data:;
+			connect-src https://www.google.com/ccm/collect https://www.google-analytics.com/g/collect https://passwordsecurity.herokuapp.com;default-src 'self' 
+			'unsafe-inline'  https://www.google-analytics.com https://fonts.gstatic.com https://cdn.jsdelivr.net 
+			https://fonts.googleapis.com https://www.googletagmanager.com https://connect.facebook.net/en_US/sdk.js 
+			https://googleads.g.doubleclick.net/ https://td.doubleclick.net/ https://www.google.com/ https://www.facebook.com/ 
+			https://www.google.com/ccm/">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -402,9 +408,9 @@
 
 
     </script>
-
 </head>
 <body>
+<div id="fb-root"></div>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 
 
@@ -426,6 +432,94 @@
         </div> -->
 
     </div>
+</div>
+
+
+<div class="container my-4 pb-4">
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-white">
+                <div class="card-body">
+					<div class="d-xl-flex">
+						<div class="col-12 col-xl-4 p-3 text-center">
+							<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100095323822454&tabs=timeline&width=340&height=499&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false&appId=1565988784348976" 
+							width="340" height="499" style="border:none;overflow:hidden" scrolling="no" 
+							frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+						</div>
+						<div class="col-12 col-xl-8 p-3">
+							<div class="fs-1 text-center ">WHERE YOU CAN FIND US</div>
+							<div>
+								<p>
+									We announce weekly where you can find us on our
+									<a onclick="RecordExternalClick('facebook', 'footer')"
+									   href="https://www.facebook.com/profile.php?id=100095323822454"
+									   target="_blank" rel="noreferrer noopener"
+									   title="External Link - Swamp Nuts Facebook"> Facebook Page </a>.
+								</p>
+								<p>
+									At Swamp Nuts, we believe in building strong relationships with local producers.
+									By attending a diverse range of farmers markets, we connect with passionate individuals who
+									share our dedication to sustainable, ethical, and organic farming practices. Here are some
+									of the farmers market venues we frequent:
+								</p>
+							</div>
+							<div class="row p-4">
+								<div class="col-md-6 d-md-flex border border-dark-subtle p-4">
+									<div>
+										<img class="me-2" src="./assets/content/RiversideLogo.png" alt="Riverside Farmers Market Of Louisiana Logo" width="100">
+									</div>
+									<div class="flex-grow-1">
+										<div class="fw-bold">
+											Riverside Farmers Market Of Louisiana
+										</div>
+										<div>
+											<a target="_blank" rel="noreferrer noopener"
+											   title="External Link - Riverside Farmers Market Of Louisiana Google Maps Address"
+											   href="https://maps.app.goo.gl/xzpEPmnRzXPMKd4VA">45020 Manny Guitrau Rd, Prairieville, LA</a>
+										</div>
+										<div>
+											<a target="_blank" rel="noreferrer noopener"
+											   title="External Link - Riverside Farmers Market Of Louisiana Facebook Group"
+											   href="https://www.facebook.com/groups/229964358625167">
+												<svg aria-hidden="true" width="40" height="40" focusable="false" data-prefix="fab" data-icon="facebook" class="svg-inline--fa fa-facebook fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+													<path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path>
+												</svg>
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6 d-md-flex border border-dark-subtle p-4">
+									<div>
+										<img class="me-2" src="./assets/content/621Logo.jpg" alt="Riverside Farmers Market Of Louisiana Logo" width="100">
+									</div>
+									<div class="flex-grow-1">
+										<div class="fw-bold">
+											Hwy 621 Outdoor Market
+										</div>
+										<div>
+											<a target="_blank" rel="noreferrer noopener"
+											   title="External Link - Riverside Farmers Market Of Louisiana Google Maps Address"
+											   href="https://maps.app.goo.gl/xzpEPmnRzXPMKd4VA">39275 Hwy 621, Gonzales, LA, United States, Louisiana</a>
+										</div>
+										<div>
+											<a target="_blank" rel="noreferrer noopener"
+											   title="External Link - Hwy 621 Outdoor Market Facebook Page"
+											   href="https://www.facebook.com/Hwy621OutdoorMarket">
+												<svg aria-hidden="true" width="40" height="40" focusable="false" data-prefix="fab" data-icon="facebook" class="svg-inline--fa fa-facebook fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+													<path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path>
+												</svg>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="container my-4 pb-4">
@@ -484,82 +578,6 @@
                         </div>
                     </div>
 
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card bg-white">
-                <div class="card-body">
-                    <div class="fs-1 text-center ">WHERE YOU CAN FIND US</div>
-                    <div>
-                        <p>
-                            We announce weekly where you can find us on our
-                            <a onclick="RecordExternalClick('facebook', 'footer')"
-                               href="https://www.facebook.com/profile.php?id=100095323822454"
-                               target="_blank" rel="noreferrer noopener"
-                               title="External Link - Swamp Nuts Facebook"> Facebook Page </a>.
-                        </p>
-                        <p>
-                            At Swamp Nuts, we believe in building strong relationships with local producers.
-                            By attending a diverse range of farmers markets, we connect with passionate individuals who
-                            share our dedication to sustainable, ethical, and organic farming practices. Here are some
-                            of the farmers market venues we frequent:
-                        </p>
-                    </div>
-                    <div class="row p-4">
-                        <div class="col-md-6 d-md-flex border border-dark-subtle p-4">
-                            <div>
-                                <img class="me-2" src="./assets/content/RiversideLogo.png" alt="Riverside Farmers Market Of Louisiana Logo" width="100">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="fw-bold">
-                                    Riverside Farmers Market Of Louisiana
-                                </div>
-                                <div>
-                                    <a target="_blank" rel="noreferrer noopener"
-                                       title="External Link - Riverside Farmers Market Of Louisiana Google Maps Address"
-                                       href="https://maps.app.goo.gl/xzpEPmnRzXPMKd4VA">45020 Manny Guitrau Rd, Prairieville, LA</a>
-                                </div>
-                                <div>
-                                    <a target="_blank" rel="noreferrer noopener"
-                                       title="External Link - Riverside Farmers Market Of Louisiana Facebook Group"
-                                       href="https://www.facebook.com/groups/229964358625167">
-                                        <svg aria-hidden="true" width="40" height="40" focusable="false" data-prefix="fab" data-icon="facebook" class="svg-inline--fa fa-facebook fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 d-md-flex border border-dark-subtle p-4">
-                            <div>
-                                <img class="me-2" src="./assets/content/621Logo.jpg" alt="Riverside Farmers Market Of Louisiana Logo" width="100">
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="fw-bold">
-                                    Hwy 621 Outdoor Market
-                                </div>
-                                <div>
-                                    <a target="_blank" rel="noreferrer noopener"
-                                       title="External Link - Riverside Farmers Market Of Louisiana Google Maps Address"
-                                       href="https://maps.app.goo.gl/xzpEPmnRzXPMKd4VA">39275 Hwy 621, Gonzales, LA, United States, Louisiana</a>
-                                </div>
-                                <div>
-                                    <a target="_blank" rel="noreferrer noopener"
-                                       title="External Link - Hwy 621 Outdoor Market Facebook Page"
-                                       href="https://www.facebook.com/Hwy621OutdoorMarket">
-                                        <svg aria-hidden="true" width="40" height="40" focusable="false" data-prefix="fab" data-icon="facebook" class="svg-inline--fa fa-facebook fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
             </div>
