@@ -52,7 +52,7 @@
         body{
             font-family: 'Roboto', sans-serif;
 
-            background: linear-gradient(to right, rgba(125, 125, 125,.4) 20%, rgba(125, 125, 125,.4)), url("./assets/content/background/background.jpg");
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 20%, rgba(255, 255, 255, 0.5)), url("./assets/content/background/background.jpg");
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
@@ -76,6 +76,24 @@
             object-fit: cover;
             width: 100%;
             height: 250px; /* You can adjust this height based on your preference */
+        }
+        .intro-section {
+            background: rgba(255, 255, 255, 0.85); /* Slightly more opaque */
+            padding: 60px 20px; /* Adds padding for spacing */
+        }
+        .intro-section h1 {
+            font-size: 3rem; /* Larger font size for title */
+            font-weight: 700; /* Bold font */
+            margin-bottom: 10px; /* Adjust spacing as needed */
+        }
+
+        .intro-section p {
+            font-size: 1.25rem; /* Slightly larger text for the intro paragraph */
+            line-height: 1.6; /* Increase line height for readability */
+            margin-bottom: 20px;
+        }
+        .intro-section h1, .intro-section p {
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for text */
         }
     </style>
 
@@ -416,9 +434,7 @@
     </script>
 </head>
 <body>
-<div id="fb-root"></div>
 <noscript>You need to enable JavaScript to run this app.</noscript>
-
 
 
 <div class="pt-2 pb-2 px-4 bg-white ">
@@ -440,6 +456,85 @@
     </div>
 </div>
 
+<div class="my-4 pb-4 ">
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="intro-section">
+                <h1 class="display-4 mb-3">Welcome to Swamp Nuts!</h1>
+                <p class="lead">Bringing you authentic Cajun-inspired boiled and roasted peanuts, crafted with care and passion for bold, irresistible flavors. Experience the taste of Southern tradition from Prairieville, Louisiana.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-4 pb-4">
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-white">
+                <div class="card-body">
+                    <div class="fs-1 text-center ">OUR PRODUCTS</div>
+                    <div class="d-md-flex">
+                        <div class="col-md-4 p-3 border border-dark-subtle">
+                            <div class="fs-5 text-center fw-bolder">Boiled</div>
+                            <div class="mt-2">
+                                <img src="./assets/Boiled.jpg" class="img-fluid productLineupImage"/>
+                            </div>
+                            <div class="mt-2">
+                                <strong>Swamp Nuts Cajun Hot Boiled Peanuts</strong> - Tender, bold, and deeply
+                                Cajun. Each peanut is soaked in a <span class="text-danger">perfectly balanced Cajun
+                                brine</span> with spices like <span class="text-danger">red pepper, garlic, and
+                                bay</span>. This blend gives a subtle heat that’s layered with Southern flavor,
+                                offering an authentic taste of Louisiana with every bite. Perfect for snack lovers
+                                looking to experience a true Cajun classic.
+                            </div>
+                            <!-- <div class="mt-2">
+                                <a href="#orderform" class="btn btn-success">Order Now</a>
+                            </div> -->
+
+                        </div>
+                        <div class="col-md-4 p-3 border border-dark-subtle d-none">
+                            <div class="fs-5 text-center fw-bolder">Sweet</div>
+                            <div class="mt-2">
+                                <img src="./assets/Candied.jpg" class="img-fluid productLineupImage"/>
+                            </div>
+                            <div class="mt-2">
+                                <strong>Sweet Swamp Nuts -</strong> We take sugar and <span class="text-danger">Cajun
+                                Seasoning</span>, bring it to a boil, and once it reaches the right consistency we
+                                mix in seasoned slow roasted peanuts and let it cool to end up with a <strong>sweet,
+                                savory, and spicy</strong> candy that you cannot find anywhere else.
+                            </div>
+                            <!-- <div class="mt-2">
+                                <a href="#orderform" class="btn btn-success">Order Now</a>
+                            </div> -->
+
+                        </div>
+                        <div class="col-md-4 p-3 border border-dark-subtle">
+                            <div class="fs-5 text-center fw-bolder">Roasted</div>
+                            <div class="mt-2">
+                                <img src="./assets/Roasted.jpg" class="img-fluid productLineupImage">
+                            </div>
+                            <div class="mt-2">
+                                <strong>Roasted Swamp Nuts</strong> - Crisp, flavorful, and unmistakably Cajun. Each
+                                peanut is brined in a rich, <span class="text-danger">Cajun-inspired blend</span>,
+                                then slow-roasted to a golden crunch. Finished with a <strong>balanced mix of savory
+                                spices</strong> like <span class="text-danger">red pepper, garlic, and lemon</span>,
+                                these roasted nuts are perfect for anyone craving a bold, satisfying snack that’s
+                                packed with Southern character.
+                            </div>
+                            <!-- <div class="mt-2">
+                                <a href="#orderform" class="btn btn-success">Order Now</a>
+                            </div> -->
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container my-4 pb-4">
 
@@ -449,10 +544,28 @@
                 <div class="card-body">
 					<div class="d-xl-flex">
 						<div class="col-12 col-xl-4 p-3 text-center">
-							<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100095323822454&tabs=timeline&width=340&height=499&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false&appId=1565988784348976" 
-							width="340" height="499" style="border:none;overflow:hidden" scrolling="no" 
-							frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-						</div>
+
+
+
+
+
+
+
+                            <iframe class="d-none d-md-block" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100095323822454&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=1565988784348976" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
 						<div class="col-12 col-xl-8 p-3">
 							<div class="fs-1 text-center ">WHERE YOU CAN FIND US</div>
 							<div>
@@ -540,71 +653,7 @@
 
 <div class="container my-4 pb-4">
 
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card bg-white">
-                <div class="card-body">
-                    <div class="fs-1 text-center ">OUR PRODUCTS</div>
-                    <div class="d-md-flex">
-                        <div class="col-md-4 p-3 border border-dark-subtle">
-                            <div class="fs-5 text-center fw-bolder">Boiled</div>
-                            <div class="mt-2">
-                                <img src="./assets/Boiled.jpg" class="img-fluid productLineupImage"/>
-                            </div>
-                            <div class="mt-2">
-                                <strong>Swamp Nuts Cajun Hot Boiled Peanuts</strong> - Tender, bold, and deeply
-                                Cajun. Each peanut is soaked in a <span class="text-danger">perfectly balanced Cajun
-                                brine</span> with spices like <span class="text-danger">red pepper, garlic, and
-                                bay</span>. This blend gives a subtle heat that’s layered with Southern flavor,
-                                offering an authentic taste of Louisiana with every bite. Perfect for snack lovers
-                                looking to experience a true Cajun classic.
-                            </div>
-                            <!-- <div class="mt-2">
-                                <a href="#orderform" class="btn btn-success">Order Now</a>
-                            </div> -->
 
-                        </div>
-                        <div class="col-md-4 p-3 border border-dark-subtle d-none">
-                            <div class="fs-5 text-center fw-bolder">Sweet</div>
-                            <div class="mt-2">
-                                <img src="./assets/Candied.jpg" class="img-fluid productLineupImage"/>
-                            </div>
-                            <div class="mt-2">
-                                <strong>Sweet Swamp Nuts -</strong> We take sugar and <span class="text-danger">Cajun
-                                Seasoning</span>, bring it to a boil, and once it reaches the right consistency we
-                                mix in seasoned slow roasted peanuts and let it cool to end up with a <strong>sweet,
-                                savory, and spicy</strong> candy that you cannot find anywhere else.
-                            </div>
-                            <!-- <div class="mt-2">
-                                <a href="#orderform" class="btn btn-success">Order Now</a>
-                            </div> -->
-
-                        </div>
-                        <div class="col-md-4 p-3 border border-dark-subtle">
-                            <div class="fs-5 text-center fw-bolder">Roasted</div>
-                            <div class="mt-2">
-                                <img src="./assets/Roasted.jpg" class="img-fluid productLineupImage">
-                            </div>
-                            <div class="mt-2">
-                                <strong>Roasted Swamp Nuts</strong> - Crisp, flavorful, and unmistakably Cajun. Each
-                                peanut is brined in a rich, <span class="text-danger">Cajun-inspired blend</span>,
-                                then slow-roasted to a golden crunch. Finished with a <strong>balanced mix of savory
-                                spices</strong> like <span class="text-danger">red pepper, garlic, and lemon</span>,
-                                these roasted nuts are perfect for anyone craving a bold, satisfying snack that’s
-                                packed with Southern character.
-                            </div>
-                            <!-- <div class="mt-2">
-                                <a href="#orderform" class="btn btn-success">Order Now</a>
-                            </div> -->
-
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="row mt-4">
         <div class="col-12">
