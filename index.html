@@ -95,343 +95,22 @@
         .intro-section h1, .intro-section p {
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for text */
         }
+
+
+        .product-card-label {
+            display: block; /* Ensures block-level behavior */
+            min-height: 2.5em; /* Adjust based on your desired line height */
+            line-height: 1.25em; /* Adjust for desired spacing between lines */
+        }
+        .uniform-image {
+            width: 100%;
+            height: 200px; /* Set a fixed height as needed */
+            object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
+            display: block; /* Ensures consistent behavior */
+            margin: 0 auto; /* Centers the image horizontally */
+        }
     </style>
-
-    <script>
-        updateTotalsSection = function(){
-            var elements = {
-                boiled: document.getElementById("quantity"),
-                roastedL: document.getElementById("quantityRl"),
-                roastedS: document.getElementById("quantityRs"),
-
-                candiedL: document.getElementById("quantityCaL"),
-                candiedS: document.getElementById("quantityCaS"),
-
-                boiledSubTotalRow: document.getElementById("BoiledSubTotalRow"),
-                boiledSubTotalQty: document.getElementById("BoiledSubTotalQty"),
-                boiledSubTotalPrice: document.getElementById("BoiledSubTotalPrice"),
-
-                roastedLSubTotalRow: document.getElementById("RoastedLSubTotalRow"),
-                roastedSSubTotalRow: document.getElementById("RoastedSSubTotalRow"),
-                roastedLSubTotalQty: document.getElementById("RoastedLSubTotalQty"),
-                roastedSSubTotalQty: document.getElementById("RoastedSSubTotalQty"),
-                roastedLSubTotalPrice: document.getElementById("RoastedLSubTotalPrice"),
-                roastedSSubTotalPrice: document.getElementById("RoastedSSubTotalPrice"),
-
-                candiedLSubTotalRow: document.getElementById("CandiedLSubTotalRow"),
-                candiedLSubTotalQty: document.getElementById("CandiedLSubTotalQty"),
-                candiedLSubTotalPrice: document.getElementById("CandiedLSubTotalPrice"),
-
-                candiedSSubTotalRow: document.getElementById("CandiedSSubTotalRow"),
-                candiedSSubTotalQty: document.getElementById("CandiedSSubTotalQty"),
-                candiedSSubTotalPrice: document.getElementById("CandiedSSubTotalPrice"),
-
-                subTotalPrice: document.getElementById("SubTotalPrice"),
-                subTotalTaxes: document.getElementById("TaxesPrice"),
-                totalPrice: document.getElementById("TotalPrice")
-            }
-
-            var qtys = {
-                boiled: parseInt(elements.boiled.value || 0),
-                roastedL: parseInt(elements.roastedL.value || 0),
-                roastedS: parseInt(elements.roastedS.value || 0),
-                candiedL: parseInt(elements.candiedL.value || 0),
-                candiedS: parseInt(elements.candiedS.value || 0),
-                boiledDollars: (parseFloat((elements.boiled.value || 0)) * 8).toFixed(2),
-                roastedLDollars: (parseFloat((elements.roastedL.value || 0)) * 10).toFixed(2),
-                roastedSDollars: (parseFloat((elements.roastedS.value || 0)) * 6).toFixed(2),
-                candiedLDollars: (parseFloat((elements.candiedL.value || 0)) * 10).toFixed(2),
-                candiedSDollars: (parseFloat((elements.candiedS.value || 0)) * 6).toFixed(2)
-            };
-
-            if(qtys.boiled === 0){
-                if(!elements.boiledSubTotalRow.classList.contains('d-none')){
-                    elements.boiledSubTotalRow.classList.toggle('d-none');
-                }
-            } else {
-                if(elements.boiledSubTotalRow.classList.contains('d-none')){
-                    elements.boiledSubTotalRow.classList.toggle('d-none');
-                }
-                elements.boiledSubTotalQty.innerText = qtys.boiled;
-                elements.boiledSubTotalPrice.innerText = qtys.boiledDollars;
-            }
-
-            if(qtys.roastedL === 0){
-                if(!elements.roastedLSubTotalRow.classList.contains('d-none')){
-                    elements.roastedLSubTotalRow.classList.toggle('d-none');
-                }
-            } else {
-                if(elements.roastedLSubTotalRow.classList.contains('d-none')){
-                    elements.roastedLSubTotalRow.classList.toggle('d-none');
-                }
-                elements.roastedLSubTotalQty.innerText = qtys.roastedL;
-                elements.roastedLSubTotalPrice.innerText = qtys.roastedLDollars;
-            }
-
-            if(qtys.roastedS === 0){
-                if(!elements.roastedSSubTotalRow.classList.contains('d-none')){
-                    elements.roastedSSubTotalRow.classList.toggle('d-none');
-                }
-            } else {
-                if(elements.roastedSSubTotalRow.classList.contains('d-none')){
-                    elements.roastedSSubTotalRow.classList.toggle('d-none');
-                }
-                elements.roastedSSubTotalQty.innerText = qtys.roastedS;
-                elements.roastedSSubTotalPrice.innerText = qtys.roastedSDollars;
-            }
-
-
-            if(qtys.candiedL === 0){
-                if(!elements.candiedLSubTotalRow.classList.contains('d-none')){
-                    elements.candiedLSubTotalRow.classList.toggle('d-none');
-                }
-            } else {
-                if(elements.candiedLSubTotalRow.classList.contains('d-none')){
-                    elements.candiedLSubTotalRow.classList.toggle('d-none');
-                }
-                elements.candiedLSubTotalQty.innerText = qtys.candiedL;
-                elements.candiedLSubTotalPrice.innerText = qtys.candiedLDollars;
-            }
-
-            if(qtys.candiedS === 0){
-                if(!elements.candiedSSubTotalRow.classList.contains('d-none')){
-                    elements.candiedSSubTotalRow.classList.toggle('d-none');
-                }
-            } else {
-                if(elements.candiedSSubTotalRow.classList.contains('d-none')){
-                    elements.candiedSSubTotalRow.classList.toggle('d-none');
-                }
-                elements.candiedSSubTotalQty.innerText = qtys.candiedS;
-                elements.candiedSSubTotalPrice.innerText = qtys.candiedSDollars;
-            }
-
-            var subTotalNumber = parseFloat(qtys.boiledDollars) +
-                parseFloat(qtys.roastedLDollars) +
-                parseFloat(qtys.roastedSDollars) +
-                parseFloat(qtys.candiedLDollars) +
-                parseFloat(qtys.candiedSDollars);
-            var subtotal = (subTotalNumber).toFixed(2);
-            elements.subTotalPrice.innerText = subtotal;
-
-            var taxesNumber = .0945 * subTotalNumber;
-            var taxes = taxesNumber.toFixed(2);
-            elements.subTotalTaxes.innerText = taxes;
-
-            var totalNumber = subTotalNumber + taxesNumber;
-            var total = totalNumber.toFixed(2);
-            elements.totalPrice.innerText = total;
-        }
-
-        submitorder = function(){
-            var updateValue = function(elementId, value){
-                var element = document.getElementById(elementId);
-                function elementUpdater(e) {
-                    element.textContent = e.target.value;
-                }
-                element.addEventListener("change", elementUpdater);
-                element.value = value;
-                element.removeEventListener("change", elementUpdater);
-            }
-
-            //todo: we need to add validation and show something when fields need fixed
-
-            var elements = {
-                name: document.getElementById("name"),
-                email: document.getElementById("email"),
-                phone: document.getElementById("phone"),
-                qty: document.getElementById("quantity"),
-
-                roastedLQty: document.getElementById("quantityRl"),
-                roastedSQty: document.getElementById("quantityRs"),
-
-                candiedLQty: document.getElementById("quantityCaL"),
-                candiedSQty: document.getElementById("quantityCaS"),
-
-                address:  document.getElementById("address"),
-                note: document.getElementById("notes")
-            };
-            var errors = [];
-
-            if(!elements.name.value || elements.name.value.length === 0){
-                errors.push("Name field is blank");
-            }
-
-            if(!elements.phone.value || elements.phone.value.length === 0){
-                errors.push("Phone number field is blank")
-            } else if(elements.phone.value.length < 7 || !elements.phone.value.match(/^\+?[0-9]\d{1,20}$/)){
-                errors.push("Phone number invalid");
-            }
-
-
-
-            if(
-                (!elements.qty.value || elements.qty.value < 1) &&
-                (!elements.roastedLQty.value || elements.roastedLQty.value < 1) &&
-                (!elements.roastedSQty.value || elements.roastedSQty.value < 1) &&
-                (!elements.candiedLQty.value || elements.candiedLQty.value < 1) &&
-                (!elements.candiedSQty.value || elements.candiedSQty.value < 1)
-            ) {
-                errors.push("Please add at least one item to the cart to place an order");
-            }
-
-            var errorBox = document.getElementById("FormErrorBox");
-            var errorBoxHidden = errorBox.classList.contains('d-none');
-            var errorList = document.getElementById("FormErrorList");
-            if(errors.length > 0) {
-                if (errorBoxHidden) {
-                    errorBox.classList.toggle('d-none');
-                }
-
-                var errorElements = [];
-                errors.forEach(function(error){
-                    errorElements.push(`<li>${error}</li>`)
-                });
-                errorList.innerHTML = errorElements.join('');
-                return;
-            } else {
-                if(!errorBoxHidden) {
-                    errorBox.classList.toggle('d-none');
-                    errorList.innerHTML = '';
-                }
-            }
-
-            document.getElementById("submitbutton").setAttribute("disabled", "");
-            document.getElementById("submitbutton").innerHTML = "Processing Order";
-
-            var qtys = {
-                boiled: parseInt(elements.qty.value || 0),
-                roastedL: parseInt(elements.roastedLQty.value || 0),
-                roastedS: parseInt(elements.roastedSQty.value || 0),
-                candiedL: parseInt(elements.candiedLQty.value || 0),
-                candiedS: parseInt(elements.candiedSQty.value || 0),
-                boiledDollars: (parseFloat((elements.qty.value || 0)) * 8).toFixed(2),
-                roastedLDollars: (parseFloat((elements.roastedLQty.value || 0)) * 10).toFixed(2),
-                roastedSDollars: (parseFloat((elements.roastedSQty.value || 0)) * 6).toFixed(2),
-                candiedLDollars: (parseFloat((elements.candiedLQty.value || 0)) * 10).toFixed(2),
-                candiedSDollars: (parseFloat((elements.candiedSQty.value || 0)) * 6).toFixed(2)
-            };
-            var subTotalNumber = parseFloat(qtys.boiledDollars) +
-                parseFloat(qtys.roastedLDollars) +
-                parseFloat(qtys.roastedSDollars) +
-                parseFloat(qtys.candiedLDollars) +
-                parseFloat(qtys.candiedSDollars);
-            var subtotal = (subTotalNumber).toFixed(2);
-
-            var taxesNumber = .0945 * subTotalNumber;
-            var taxes = taxesNumber.toFixed(2);
-
-            var totalNumber = subTotalNumber + taxesNumber;
-            var total = totalNumber.toFixed(2);
-            var notePrefix = `Subtotal: ${subtotal} - Taxes: ${taxes} - Total: ${total} - Notes: `;
-
-            var gtagPurchaceItems = [];
-            if(qtys.boiled > 0){
-                gtagPurchaceItems.push({
-                    product_id: "boiled",
-                    product_name: "boiled",
-                    price: qtys.boiledDollars,
-                    quantity: qtys.boiled
-                })
-            }
-            if(qtys.roastedL > 0){
-                gtagPurchaceItems.push({
-                    product_id: "roastedL",
-                    product_name: "roastedL",
-                    price: qtys.roastedLDollars,
-                    quantity: qtys.roastedL
-                })
-            }
-            if(qtys.roastedS > 0){
-                gtagPurchaceItems.push({
-                    product_id: "roastedS",
-                    product_name: "roastedS",
-                    price: qtys.roastedSDollars,
-                    quantity: qtys.roastedS
-                })
-            }
-            if(qtys.candiedL > 0){
-                gtagPurchaceItems.push({
-                    product_id: "candiedL",
-                    product_name: "candiedL",
-                    price: qtys.candiedLDollars,
-                    quantity: qtys.candiedL
-                })
-            }
-            if(qtys.candiedS > 0){
-                gtagPurchaceItems.push({
-                    product_id: "candiedS",
-                    product_name: "candiedS",
-                    price: qtys.candiedSDollars,
-                    quantity: qtys.candiedS
-                })
-            }
-
-            var requestData = {
-                name: document.getElementById("name").value + " - " + document.getElementById("email").value,
-                phone: document.getElementById("phone").value,
-                qty: `Quarts: ${elements.qty.value} - ` +
-                        `RoastedL: ${elements.roastedLQty.value} - RoastedS: ${elements.roastedSQty.value} - ` +
-                        `CandiedL: ${elements.candiedLQty.value} - CandiedS: ${elements.candiedSQty.value}`,
-                address:  document.getElementById("address").value,
-                note: notePrefix + document.getElementById("notes").value
-            }
-
-            var resetForm = function(){
-                updateValue("name", '');
-                updateValue("phone", '');
-                updateValue("quantity", '');
-                updateValue("quantityRs", '');
-                updateValue("quantityRl", '');
-                updateValue("quantityCaL", '');
-                updateValue("quantityCaS", '');
-                updateValue("address", '');
-                updateValue("notes", '');
-                updateTotalsSection();
-            }
-
-
-            var requestOptions = {
-                method: 'GET'
-            };
-
-            var queryString = new URLSearchParams(requestData).toString();
-            RecordExternalClick("OrderOnline", "swampnuts.biz")
-            fetch("https://passwordsecurity.herokuapp.com/api/swampnuts/order?" + queryString, requestOptions)
-                .then(response => {
-                    document.getElementById("submitbutton").innerHTML = "Place Order";
-                    response.text().then(res => {
-                        if(res){
-                            resetForm();
-                            gtag("event", "purchase", {
-                                value: subtotal,
-                                currency: "USD",
-                                items: [gtagPurchaceItems]
-                            });
-                            document.getElementById("submitbutton").removeAttribute("disabled");
-                            document.location.href = "https://swampnuts.biz/complete";
-
-                        } else {
-                            var myModal = new bootstrap.Modal(document.getElementById('OrderErrorModal'), {
-                                keyboard: false
-                            })
-                            myModal.show();
-                        }
-                    })
-                })
-                .catch(error => {
-                    document.getElementById("submitbutton").innerHTML = "Place Order";
-                    document.getElementById("submitbutton").removeAttribute("disabled");
-                    var myModal = new bootstrap.Modal(document.getElementById('OrderErrorModal'), {
-                        keyboard: false
-                    })
-                    myModal.show();
-                });
-
-            return false
-        }
-
-
-    </script>
+    <script src="./sn.js"></script>
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -444,14 +123,14 @@
 		<img src="./assets/logotrans.png" style="transform: scaleX(-1);" alt="Swamp Nuts Logo" height="50" class="align-top">
 		<div class="flex-grow-1"></div>
 
-        <!-- <div class=" d-none d-md-inline-block mt-2 d-flex">
+        <div class=" d-none d-md-inline-block mt-2 d-flex">
             <a href="#orderform" title="Order Online"
                class="btn btn-dark text-uppercase d-inline-flex">
                 <strong class="d-block">
                     Order Online
                 </strong>
             </a>
-        </div> -->
+        </div>
 
     </div>
 </div>
@@ -478,7 +157,7 @@
                         <div class="col-md-4 p-3 border border-dark-subtle">
                             <div class="fs-5 text-center fw-bolder">Boiled</div>
                             <div class="mt-2">
-                                <img src="./assets/Boiled.jpg" class="img-fluid productLineupImage"/>
+                                <img src="./assets/Boiled.jpg" alt="Swamp Nuts Boiled Peanuts Image" class="img-fluid productLineupImage"/>
                             </div>
                             <div class="mt-2">
                                 <strong>Swamp Nuts Cajun Hot Boiled Peanuts</strong> - Tender, bold, and deeply
@@ -488,15 +167,15 @@
                                 offering an authentic taste of Louisiana with every bite. Perfect for snack lovers
                                 looking to experience a true Cajun classic.
                             </div>
-                            <!-- <div class="mt-2">
+                            <div class="mt-2">
                                 <a href="#orderform" class="btn btn-success">Order Now</a>
-                            </div> -->
+                            </div>
 
                         </div>
                         <div class="col-md-4 p-3 border border-dark-subtle d-none">
                             <div class="fs-5 text-center fw-bolder">Sweet</div>
                             <div class="mt-2">
-                                <img src="./assets/Candied.jpg" class="img-fluid productLineupImage"/>
+                                <img src="./assets/Candied.jpg" alt="Sweet Swamp Nuts Candied Peanuts Image" class="img-fluid productLineupImage"/>
                             </div>
                             <div class="mt-2">
                                 <strong>Sweet Swamp Nuts -</strong> We take sugar and <span class="text-danger">Cajun
@@ -504,15 +183,15 @@
                                 mix in seasoned slow roasted peanuts and let it cool to end up with a <strong>sweet,
                                 savory, and spicy</strong> candy that you cannot find anywhere else.
                             </div>
-                            <!-- <div class="mt-2">
+                            <div class="mt-2">
                                 <a href="#orderform" class="btn btn-success">Order Now</a>
-                            </div> -->
+                            </div>
 
                         </div>
                         <div class="col-md-4 p-3 border border-dark-subtle">
                             <div class="fs-5 text-center fw-bolder">Roasted</div>
                             <div class="mt-2">
-                                <img src="./assets/Roasted.jpg" class="img-fluid productLineupImage">
+                                <img src="./assets/Roasted.jpg" alt="Roasted Swamp Nuts Roasted Peanuts Image" class="img-fluid productLineupImage">
                             </div>
                             <div class="mt-2">
                                 <strong>Roasted Swamp Nuts</strong> - Crisp, flavorful, and unmistakably Cajun. Each
@@ -522,10 +201,10 @@
                                 these roasted nuts are perfect for anyone craving a bold, satisfying snack that’s
                                 packed with Southern character.
                             </div>
-                            <!-- <div class="mt-2">
+                            <div class="mt-2">
                                 <a href="#orderform" class="btn btn-success">Order Now</a>
-                            </div> -->
-
+                            </div>
+r
                         </div>
                     </div>
 
@@ -545,24 +224,7 @@
 					<div class="d-xl-flex">
 						<div class="col-12 col-xl-4 p-3 text-center">
 
-
-
-
-
-
-
                             <iframe class="d-none d-md-block" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100095323822454&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=1565988784348976" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-
-
-
-
-
-
-
-
-
-
-
 
 
                         </div>
@@ -719,12 +381,12 @@
     </div>
 
 
-    <div class="row mt-4 d-none" id="orderform">
+    <div class="row mt-4" id="orderform">
         <div class="col-12">
             <div class="card bg-white p-4">
                 <h2 class="fs-1">Order Online</h2>
                 <form onsubmit="return false">
-		    <div id="toolatedisplay" class="text-danger large fw-bold mb-2 d-none">Orders placed after 6:00 PM will be for next day delivery</div>
+		    <div id="toolatedisplay" class="text-danger large fw-bold mb-2 d-none">Orders placed after 7:30 PM will be for next day delivery</div>
 		    <script>
 			    var checkPastTime = function(){
 				    var pasttime = new Date().getHours() >= 18;
@@ -740,70 +402,8 @@
 				    checkPastTime();
 			    }, 30000)
 		    </script>
-                    <div class="row">
-                        <div class="mb-4 col-lg-3 col-md-4 col-sm-6 p-3 border border-light-subtle">
-                            <label for="quantity" class="form-label fs-5 fw-bolder mb-0">Cajun Boiled Peanuts</label>
-                            <br/>
-                            <div class="pb-2">
-                                <img src="./assets/Boiled.jpg" class="img-fluid">
-                            </div>
-                            <div class="form form-control">
-                                <div>
-                                    <span class="fw-bold text-success">$8.00 - QUART </span>
-                                </div>
-                                <strong># of Quarts</strong>
-                                <input onchange="updateTotalsSection()" id="quantity" type="number" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="mb-4 col-lg-3 col-md-4 col-sm-6 p-3 border border-light-subtle">
-                            <label class="form-label fs-5 fw-bolder mb-0">Candied Peanuts</label>
-                            <br/>
-                            <div class="pb-2">
-                                <img src="./assets/Candied.jpg" class="img-fluid">
-                            </div>
-                            <div class="form form-control">
-                                <div>
-                                    <span class="fw-bold text-success">$10.00 - PINT </span>
-                                </div>
-                                <label for="quantityCaL"><strong># of Containers</strong></label>
-                                <input onchange="updateTotalsSection()" id="quantityCaL" type="number" class="form-control"/>
-                            </div>
+                    <div class="row" id="productContainer"></div>
 
-                            <div class="form form-control mt-2">
-                                <div>
-                                    <span class="fw-bold text-success">$6.00 - CUP </span>
-                                </div>
-                                <label for="quantityCaS"><strong># of Containers</strong></label>
-                                <input onchange="updateTotalsSection()" id="quantityCaS" type="number" class="form-control"/>
-                            </div>
-
-                        </div>
-                        <div class="mb-4 col-lg-3 col-md-4 col-sm-6 p-3 border border-light-subtle">
-                            <label class="form-label fs-5 fw-bolder mb-0">Roasted Peanuts</label>
-                            <br/>
-                            <div class="pb-2">
-                                <img src="./assets/Roasted.jpg" class="img-fluid">
-                            </div>
-                            <div>
-
-                                <div class="form form-control">
-                                    <div>
-                                        <span class="fw-bold text-success">$10.00 - PINT </span>
-                                    </div>
-                                    <label for="quantityRl"><strong># of Containers</strong></label>
-                                    <input onchange="updateTotalsSection()" id="quantityRl" type="number" class="form-control"/>
-                                </div>
-
-                                <div class="form form-control mt-2">
-                                    <div>
-                                        <span class="fw-bold text-success">$6.00 - CUP </span>
-                                    </div>
-                                    <label for="quantityRs"><strong># of Containers</strong></label>
-                                    <input onchange="updateTotalsSection()" id="quantityRs" type="number" class="form-control"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="mb-2">
                         <label for="name" class="form-label"><strong>Name</strong></label>
@@ -821,10 +421,10 @@
                         <label for="address" class="form-label"><strong>Delivery Address</strong></label>
                         <input id="address" class="form-control"/>
                         <div class="form-text">
-			    <span class="text-danger">There is a $8 minimum order for delivery.</span><br/>
-                            Our Delivery Area Includes Prairieville and Gonzales.<br/>
-                            We make deliveries around 6pm once daily Monday - Friday and Saturdays where events allow.<br/>
-                            If this is for pickup, please specify here and include requested pickup time. You will receive a text with the pickup address.
+                            <span class="text-danger">A $10 minimum order is required for delivery.</span><br/>
+                            We deliver to Galvez, Prairieville, and Gonzales.<br/>
+                            Pickup and Deliveries are made between 6 PM and 9 PM, Monday through Friday, with Saturday deliveries available when events permit.<br/>
+                            For pickup orders, please specify your requested pickup time. You will receive a text message with the pickup location.
                         </div>
                     </div>
 
@@ -861,40 +461,10 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody class="table table-bordered">
-                                <tr id="BoiledSubTotalRow" class="d-none">
-                                    <td class="fw-bold" id="BoiledSubTotalQty">0</td>
-                                    <td class="pe-2">Quarts Cajun Boiled Peanuts</td>
-                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="BoiledSubTotalPrice"></span></td>
-                                </tr>
-
-
-                                <tr id="RoastedLSubTotalRow" class="d-none">
-                                    <td class="fw-bold" id="RoastedLSubTotalQty">0</td>
-                                    <td  class="pe-2">Roasted Peanuts <span class="small">(12oz)</span></td>
-                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="RoastedLSubTotalPrice"></span></td>
-                                </tr>
-                                <tr id="RoastedSSubTotalRow" class="d-none">
-                                    <td class="fw-bold" id="RoastedSSubTotalQty">0</td>
-                                    <td  class="pe-2">Roasted Peanuts <span class="small">(6oz)</span></td>
-                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="RoastedSSubTotalPrice"></span></td>
-                                </tr>
-
-
-                                <tr id="CandiedLSubTotalRow" class="d-none">
-                                    <td id="CandiedLSubTotalQty" class="fw-bold">0</td>
-                                    <td class="pe-2">Candied Peanuts <span class="small">(11oz)</span></td>
-                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="CandiedLSubTotalPrice"></span></td>
-                                </tr>
-                                <tr id="CandiedSSubTotalRow" class="d-none">
-                                    <td id="CandiedSSubTotalQty" class="fw-bold">0</td>
-                                    <td class="pe-2">Candied Peanuts <span class="small">(6oz)</span></td>
-                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="CandiedSSubTotalPrice"></span></td>
-                                </tr>
-
-
-
+                                <tbody id="subtotalBody" class="table table-bordered">
+                                <!-- Subtotal rows will be dynamically inserted here -->
                                 </tbody>
+
                                 <tfoot class="table table-bordered">
                                 <tr class="text-success">
                                     <td colspan="2" class="fw-bolder pe-2 text-end">Subtotal</td>
@@ -917,7 +487,7 @@
 
 
                     <div>
-                        <button id="submitbutton" onclick="submitorder()" class="btn btn-primary">Place Order</button>
+                        <button id="submitbutton" onclick="submitOrder()" class="btn btn-primary">Place Order</button>
                     </div>
 
                 </form>
@@ -944,6 +514,23 @@
                 </div>
             </div>
         </div>
+        <div class="modal" tabindex="-1" id="OrderSummaryModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thank you for your business!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="OrderSummaryModalContent">
+                        <!-- Order summary content will be inserted here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 	
