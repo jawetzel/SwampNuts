@@ -30,24 +30,7 @@
  
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-9951VXX0Q7"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'G-9951VXX0Q7');
-	</script>
-
-    <script>
-        RecordExternalClick = function (btnName, location) {
-            gtag('event', "external-click - " + btnName, {
-                'event_category': location,
-                'event_label': btnName
-        });
-        }
-    </script>
-
-
+    <script src="./sn.js"></script>
     <style>
         body{
             font-family: 'Roboto', sans-serif;
@@ -110,7 +93,7 @@
             margin: 0 auto; /* Centers the image horizontally */
         }
     </style>
-    <script src="./sn.js"></script>
+
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -387,21 +370,6 @@ r
                 <h2 class="fs-1">Order Online</h2>
                 <form onsubmit="return false">
 		    <div id="toolatedisplay" class="text-danger large fw-bold mb-2 d-none">Orders placed after 7:30 PM will be for next day delivery</div>
-		    <script>
-			    var checkPastTime = function(){
-				    var pasttime = new Date().getHours() >= 18;
-				    var element = document.getElementById("toolatedisplay");
-				    var isHidden = element.classList.contains('d-none');
-				    if ((pasttime && isHidden) || (!pasttime && !isHidden)) {
-					    element.classList.toggle('d-none');
-				    }
-			    }
-
-			    checkPastTime();
-			    setInterval(function(){
-				    checkPastTime();
-			    }, 30000)
-		    </script>
                     <div class="row" id="productContainer"></div>
 
 

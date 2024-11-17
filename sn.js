@@ -1,3 +1,27 @@
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-9951VXX0Q7');
+
+
+function RecordExternalClick(btnName, location) {
+    gtag('event', "external-click - " + btnName, {
+        'event_category': location,
+        'event_label': btnName
+    });
+}
+function checkPastTime(){
+    var pasttime = new Date().getHours() >= 18;
+    var element = document.getElementById("toolatedisplay");
+    var isHidden = element.classList.contains('d-none');
+    if ((pasttime && isHidden) || (!pasttime && !isHidden)) {
+        element.classList.toggle('d-none');
+    }
+}
+
+
+
 const productData = [
     {
         id: 'boiled',
@@ -106,6 +130,10 @@ function renderProductSection(containerId, subtotalContainerId) {
 
 document.addEventListener('DOMContentLoaded', () => {
     renderProductSection('productContainer', 'subtotalBody');
+    checkPastTime();
+    setInterval(function(){
+        checkPastTime();
+    }, 30000)
 });
 
 // Shared Utility Functions
