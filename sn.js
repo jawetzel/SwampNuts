@@ -349,7 +349,7 @@ function submitOrder() {
                     });
 
                     // Display order summary in a modal instead of redirecting
-                    let orderSummary = `<h5 class="text-success mb-4">Order Placement Successful</h5>`;
+                    let orderSummary = `<h5 class="text-success mb-4">Your Order Has Been Placed!</h5>`;
                     orderSummary += `<p><b>Name:</b> ${elements.name.value}</p>`;
                     orderSummary += `<p><b>Phone:</b> ${elements.phone.value}</p>`;
                     orderSummary += `<p><b>Address:</b> ${elements.address.value}</p>`;
