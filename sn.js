@@ -337,13 +337,14 @@ function submitOrder() {
                 if (res) {
                     gtag("event", "purchase", {
                         value: subTotal,
+                        tax: taxes,
                         currency: "USD",
                         items: productData
-                            .filter(product => product.visible) // Filter out non-visible products
+                            .filter(product => product.visible && orderQtys[product.id] > 0)
                             .map(product => ({
-                                product_id: product.id,
-                                product_name: product.id,
-                                price: calculatePrice(orderQtys[product.id], product.price),
+                                item_id: product.id, // Use item_id instead of product_id if required
+                                item_name: product.name, // item_name should map correctly to product.name
+                                price: product.price, // Ensure this is the per-item price
                                 quantity: orderQtys[product.id]
                             }))
                     });
