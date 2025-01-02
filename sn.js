@@ -23,7 +23,7 @@ function checkPastTime(){
 
 
 const productData = [
-    {
+    /*{
         id: 'boiled',
         name: 'Cajun Boiled Peanuts',
         elementId: 'quantity',
@@ -32,7 +32,7 @@ const productData = [
         imgSrc: './assets/BoiledBagged.jpg',
         visible: true,
         unitLabel: 'Quarts'
-    },
+    },*/
     {
         id: 'frozen',
         name: 'Cajun Boiled Peanuts (Frozen)',
@@ -42,26 +42,6 @@ const productData = [
         imgSrc: './assets/BoiledBagged.jpg',
         visible: true,
         unitLabel: 'Quarts'
-    },
-    {
-        id: 'candiedL',
-        name: 'Candied (Large)',
-        elementId: 'quantityCaL',
-        price: 8,
-        priceLabel: '$8.00 - PINT',
-        imgSrc: './assets/Candied.jpg',
-        visible: false,
-        unitLabel: 'Containers'
-    },
-    {
-        id: 'candiedS',
-        name: 'Candied (Small)',
-        elementId: 'quantityCaS',
-        price: 6,
-        priceLabel: '$6.00 - CUP',
-        imgSrc: './assets/Candied.jpg',
-        visible: false,
-        unitLabel: 'Containers'
     },
     {
         id: 'roastedL',
