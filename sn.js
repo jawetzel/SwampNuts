@@ -12,7 +12,8 @@ function RecordExternalClick(btnName, location) {
     });
 }
 function checkPastTime(){
-    var pasttime = new Date().getHours() >= 18;
+    console.log(new Date().getHours());
+    var pasttime = new Date().getHours() >= 16;
     var element = document.getElementById("toolatedisplay");
     var isHidden = element.classList.contains('d-none');
     if ((pasttime && isHidden) || (!pasttime && !isHidden)) {
@@ -23,7 +24,7 @@ function checkPastTime(){
 
 
 const productData = [
-    /*{
+    {
         id: 'boiled',
         name: 'Cajun Boiled Peanuts',
         elementId: 'quantity',
@@ -32,7 +33,7 @@ const productData = [
         imgSrc: './assets/BoiledBagged.jpg',
         visible: true,
         unitLabel: 'Quarts'
-    },*/
+    },
     {
         id: 'frozen',
         name: 'Cajun Boiled Peanuts (Frozen)',
@@ -76,18 +77,26 @@ function renderProductSection(containerId, subtotalContainerId) {
 
         // Product Input Card HTML
         const productCard = `
-            <div class="mb-4 col-lg-3 col-md-6 col-sm-6 p-3 border border-light-subtle">
-                <label for="${product.elementId}" class="form-label fs-5 fw-bolder mb-0 product-card-label">${product.name}</label>
-                <br/>
-                <div class="pb-2">
-                    <img src="${product.imgSrc}" alt="${product.name} image" class="img-fluid uniform-image"/>
-                </div>
-                <div class="form form-control">
-                    <div>
-                        <span class="fw-bold text-success">${product.priceLabel}</span>
-                    </div>
-                    <strong># of ${product.unitLabel}</strong>
-                    <input onchange="updateTotalsSection()" id="${product.elementId}" type="number" class="form-control"/>
+            <div class="mb-4 col-lg-3 col-md-6 col-sm-6">
+                <div class="card h-100 shadow-sm border border-light">
+                      <img src="${product.imgSrc}" alt="${product.name} image" class="card-img-top uniform-image" />
+                
+                      <div class="card-body p-3 d-flex flex-column justify-content-between">
+                            <div>
+                                  <h5 class="card-title fs-6 fw-bold mb-2">${product.name}</h5>
+                                  <p class="text-success fw-bold mb-1">${product.priceLabel}</p>
+                                  <div class="mb-2">
+                                      <label for="${product.elementId}" class="form-label small"># of ${product.unitLabel}</label>
+                                      <input 
+                                        onchange="updateTotalsSection()" 
+                                        placeholder="ex: 2" 
+                                        id="${product.elementId}" 
+                                        type="number" 
+                                        min="0"
+                                        class="form-control form-control-sm" />
+                                  </div>                                
+                            </div>
+                      </div>
                 </div>
             </div>
 

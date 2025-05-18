@@ -40,6 +40,32 @@
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-9951VXX0Q7"></script>
     <script src="./sn.js"></script>
+
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Swamp Nuts",
+            "url": "https://swampnuts.biz",
+            "image": "https://swampnuts.biz/assets/Boiled.jpg",
+            "description": "Local Cajun-style boiled and roasted peanut vendor based in Prairieville, LA.",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Prairieville",
+                "addressRegion": "LA",
+                "addressCountry": "US"
+            },
+            "email": "service@swampnuts.biz",
+            "priceRange": "$",
+            "sameAs": [
+                "https://www.facebook.com/profile.php?id=100095323822454"
+            ],
+            "servesCuisine": "Cajun"
+        }
+    </script>
+
+
     <style>
         body{
             font-family: 'Roboto', sans-serif;
@@ -101,6 +127,12 @@
             display: block; /* Ensures consistent behavior */
             margin: 0 auto; /* Centers the image horizontally */
         }
+
+        .card:hover {
+            background-color: #f8f9fa;
+            border-color: #ced4da;
+            cursor: pointer;
+        }
     </style>
 
 </head>
@@ -146,7 +178,7 @@
                 <div class="card-body">
                     <div class="fs-1 text-center ">OUR PRODUCTS</div>
                     <div class="d-md-flex">
-                        <div class="col-md-4 p-3 border border-dark-subtle">
+                        <div class="col-md-6 p-3 border border-dark-subtle">
                             <div class="fs-5 text-center fw-bolder">Boiled</div>
                             <div class="mt-2">
                                 <img src="./assets/Boiled.jpg" alt="Swamp Nuts Boiled Peanuts Image" class="img-fluid productLineupImage"/>
@@ -164,23 +196,7 @@
                             </div>
 
                         </div>
-                        <div class="col-md-4 p-3 border border-dark-subtle d-none">
-                            <div class="fs-5 text-center fw-bolder">Sweet</div>
-                            <div class="mt-2">
-                                <img src="./assets/Candied.jpg" alt="Sweet Swamp Nuts Candied Peanuts Image" class="img-fluid productLineupImage"/>
-                            </div>
-                            <div class="mt-2">
-                                <strong>Sweet Swamp Nuts -</strong> We take sugar and <span class="text-danger">Cajun
-                                Seasoning</span>, bring it to a boil, and once it reaches the right consistency we
-                                mix in seasoned slow roasted peanuts and let it cool to end up with a <strong>sweet,
-                                savory, and spicy</strong> candy that you cannot find anywhere else.
-                            </div>
-                            <div class="mt-2">
-                                <a href="#orderform" class="btn btn-success">Order Now</a>
-                            </div>
-
-                        </div>
-                        <div class="col-md-4 p-3 border border-dark-subtle">
+                        <div class="col-md-6 p-3 border border-dark-subtle">
                             <div class="fs-5 text-center fw-bolder">Roasted</div>
                             <div class="mt-2">
                                 <img src="./assets/Roasted.jpg" alt="Roasted Swamp Nuts Roasted Peanuts Image" class="img-fluid productLineupImage">
@@ -196,7 +212,6 @@
                             <div class="mt-2">
                                 <a href="#orderform" class="btn btn-success">Order Now</a>
                             </div>
-r
                         </div>
                     </div>
 
@@ -270,32 +285,6 @@ r
 										</div>
 									</div>
 								</div>
-								<!--
-								<div class="col-md-6 d-md-flex border border-dark-subtle p-4">
-									<div>
-										<img class="me-2" src="./assets/content/621Logo.jpg" alt="Riverside Farmers Market Of Louisiana Logo" width="100">
-									</div>
-									<div class="flex-grow-1">
-										<div class="fw-bold">
-											Hwy 621 Outdoor Market
-										</div>
-										<div>
-											<a target="_blank" rel="noreferrer noopener"
-											   title="External Link - Riverside Farmers Market Of Louisiana Google Maps Address"
-											   href="https://maps.app.goo.gl/xzpEPmnRzXPMKd4VA">39275 Hwy 621, Gonzales, LA, United States, Louisiana</a>
-										</div>
-										<div>
-											<a target="_blank" rel="noreferrer noopener"
-											   title="External Link - Hwy 621 Outdoor Market Facebook Page"
-											   href="https://www.facebook.com/Hwy621OutdoorMarket">
-												<svg aria-hidden="true" width="40" height="40" focusable="false" data-prefix="fab" data-icon="facebook" class="svg-inline--fa fa-facebook fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-													<path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path>
-												</svg>
-											</a>
-										</div>
-									</div>
-								</div>
-								-->
 							</div>
 						</div>
 					</div>
@@ -376,10 +365,21 @@ r
     <div class="row mt-4" id="orderform">
         <div class="col-12">
             <div class="card bg-white p-4">
-                <h2 class="fs-1">Order Online</h2>
+                <h2 class="fs-1">
+                    <img src="./assets/logotrans.png" alt="Swamp Nuts Logo" height="50" class="align-top">
+                    Order Online
+                </h2>
                 <form onsubmit="return false">
-		    <div id="toolatedisplay" class="text-danger large fw-bold mb-2 d-none">Orders placed after 7:30 PM will be for next day delivery</div>
-                    <div class="row" id="productContainer"></div>
+                    <div class="mb-2">
+                        <h3>Fresh Flavor, Slow-Steamed — Delivered Hot</h3>
+                        <p>
+                            Weekday orders are gently reheated from fresh-cooked batches using a steam method that preserves taste and texture.
+                        </p>
+                        <p>
+                            <b class="text-danger">Free delivery to Prairieville, Galvez, Gonzales & nearby areas.</b> Orders placed after 6 PM will be delivered next day.
+                        </p>
+                    </div>
+                    <div class="row g-3" id="productContainer"></div>
 
 
                     <div class="mb-2">
@@ -398,7 +398,6 @@ r
                         <label for="address" class="form-label"><strong>Delivery Address</strong></label>
                         <input id="address" class="form-control"/>
                         <div class="form-text">
-                            <span class="text-danger">A $10 minimum order is required for delivery.</span><br/>
                             We deliver to Galvez, Prairieville, and Gonzales.<br/>
                             Pickup and Deliveries are made between 6 PM and 9 PM, Monday through Friday, with Saturday deliveries available when events permit.<br/>
                             For pickup orders, please specify your requested pickup time. You will receive a text message with the pickup location.
@@ -421,50 +420,34 @@ r
                         </ul>
                     </div>
 
+                    <div class="summary-container text-center mt-4">
+                        <div class="card p-3 shadow-sm" style="min-width: 320px; max-width: 420px;">
+                            <h5 class="text-center fw-bold mb-3">Order Summary</h5>
 
-                    <div >
-                        <div class="d-inline-block border border-black p-2">
-                            <table>
-                                <thead>
-                                <tr class="border-black border-bottom">
-                                    <th class="pe-2">
-                                        Qty
-                                    </th>
-                                    <th>
-                                        Item
-                                    </th>
-                                    <th>
-                                        Price
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody id="subtotalBody" class="table table-bordered">
-                                <!-- Subtotal rows will be dynamically inserted here -->
+                            <table class="table table-sm mb-3">
+                                <tbody id="subtotalBody" class="table-bordered">
+                                <!-- dynamically inserted subtotal rows -->
                                 </tbody>
-
-                                <tfoot class="table table-bordered">
+                                <tfoot class="table-bordered">
                                 <tr class="text-success">
-                                    <td colspan="2" class="fw-bolder pe-2 text-end">Subtotal</td>
-                                    <td class="fw-bolder text-end">$<span class="p-0 text-end" id="SubTotalPrice">0.00</span></td>
+                                    <td colspan="2" class="text-end fw-bold">Subtotal</td>
+                                    <td class="text-end fw-bold">$<span id="SubTotalPrice">0.00</span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" class="pe-2 text-end">Taxes (9.45%)</td>
-                                    <td class="fw-bold text-end">$<span class="p-0 text-end" id="TaxesPrice">0.00</span></td>
+                                    <td colspan="2" class="text-end">Taxes (9.45%)</td>
+                                    <td class="text-end fw-bold">$<span id="TaxesPrice">0.00</span></td>
                                 </tr>
                                 <tr class="text-danger">
-                                    <td colspan="2" class="fw-bolder pe-2 text-end">Total</td>
-                                    <td class="fw-bolder text-end">$<span class="p-0" id="TotalPrice">0.00</span></td>
+                                    <td colspan="2" class="text-end fw-bold">Total</td>
+                                    <td class="text-end fw-bold">$<span id="TotalPrice">0.00</span></td>
                                 </tr>
                                 </tfoot>
                             </table>
+
+                            <div class="d-grid">
+                                <button id="submitbutton" onclick="submitOrder()" class="btn btn-primary">Place Order</button>
+                            </div>
                         </div>
-
-
-                    </div>
-
-
-                    <div>
-                        <button id="submitbutton" onclick="submitOrder()" class="btn btn-primary">Place Order</button>
                     </div>
 
                 </form>
