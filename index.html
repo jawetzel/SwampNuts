@@ -133,6 +133,13 @@
             border-color: #ced4da;
             cursor: pointer;
         }
+
+        .shutdown {
+            display: none !important;
+        }
+        .shutdown-message {
+            // display: none !important;
+        }
     </style>
 
 </head>
@@ -147,9 +154,9 @@
 		<img src="./assets/logotrans.png" style="transform: scaleX(-1);" alt="Swamp Nuts Logo" height="50" class="align-top">
 		<div class="flex-grow-1"></div>
 
-        <div class=" d-none d-md-inline-block mt-2 d-flex">
+        <div class="d-none d-md-inline-block mt-2 d-flex shutdown">
             <a href="#orderform" title="Order Online"
-               class="btn btn-dark text-uppercase d-inline-flex">
+               class=" btn btn-dark text-uppercase d-inline-flex ">
                 <strong class="d-block">
                     Order Online
                 </strong>
@@ -165,7 +172,11 @@
             <div class="intro-section">
                 <h1 class="display-4 mb-3">Welcome to Swamp Nuts!</h1>
                 <p class="lead">Bringing you authentic Cajun-inspired boiled and roasted peanuts, crafted with care and passion for bold, irresistible flavors. Experience the taste of Southern tradition from Prairieville, Louisiana.</p>
-
+                <div class="shutdown-message" style="margin-top: 1.5rem; padding: 1rem; background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 0.25rem; text-align: center;">
+                    🌞 We're closed for the summer!<br>
+                    Swamp Nuts will reopen in early fall at the Riverside Farmers Market.<br>
+                    Follow us on <a href="https://www.facebook.com/swampnuts.biz" target="_blank"><strong>Facebook</strong></a> for updates.
+                </div>
             </div>
         </div>
     </div>
@@ -191,7 +202,7 @@
                                 offering an authentic taste of Louisiana with every bite. Perfect for snack lovers
                                 looking to experience a true Cajun classic.
                             </div>
-                            <div class="mt-2">
+                            <div class="mt-2 shutdown">
                                 <a href="#orderform" class="btn btn-success">Order Now</a>
                             </div>
 
@@ -210,7 +221,7 @@
                                 packed with Southern character.
                             </div>
                             <div class="mt-2">
-                                <a href="#orderform" class="btn btn-success">Order Now</a>
+                                <a href="#orderform" class="btn btn-success shutdown">Order Now</a>
                             </div>
                         </div>
                     </div>
@@ -362,7 +373,7 @@
     </div>
 
 
-    <div class="row mt-4" id="orderform">
+    <div class="row mt-4 shutdown" id="orderform">
         <div class="col-12">
             <div class="card bg-white p-4">
                 <h2 class="fs-1">
