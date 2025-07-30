@@ -12,9 +12,9 @@
                style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
                font-src 'self' https://fonts.gstatic.com;
                connect-src 'self' https://www.google-analytics.com https://passwordsecurity.herokuapp.com https://www.google.com/ccm/collect https://googleads.g.doubleclick.net/;
-               script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://www.googletagmanager.com https://connect.facebook.net https://googleads.g.doubleclick.net/ https://td.doubleclick.net/ https://www.google.com https://www.facebook.com https://m.facebook.com;
-               img-src 'self' data: https://www.google.com/pagead/ www.google.com;
-               frame-src 'self' https://www.facebook.com https://m.facebook.com https://td.doubleclick.net https://www.googletagmanager.com;
+               script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com/sdk/js https://www.google-analytics.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://www.googletagmanager.com https://connect.facebook.net https://googleads.g.doubleclick.net/ https://td.doubleclick.net/ https://www.google.com https://www.facebook.com https://m.facebook.com;
+               img-src 'self' data: https://www.google.com/pagead/ www.google.com https://www.paypalobjects.com;
+               frame-src 'self' https://www.sandbox.paypal.com https://www.facebook.com https://m.facebook.com https://td.doubleclick.net https://www.googletagmanager.com;
                child-src 'self' https://www.facebook.com https://m.facebook.com https://td.doubleclick.net https://www.googletagmanager.com;">
 
 
@@ -33,6 +33,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AbzhuvQkor4QeM9_Fs5WnkcJG1reN7_QfVm7P-Q0bN3KhMRXl0OKQdWP0fhdTtU0NOxOA5Pki-Cttfs4&currency=USD"></script>
+
 
     <title>Swamp Nuts - Cajun Hot Boiled Peanuts, Cajun Candied Peanuts, Cajun Roasted Peanuts</title>
 
@@ -135,10 +139,10 @@
         }
 
         .shutdown {
-            display: none !important;
+            // display: none !important;
         }
         .shutdown-message {
-            // display: none !important;
+            display: none !important;
         }
     </style>
 
@@ -154,7 +158,8 @@
 		<img src="./assets/logotrans.png" style="transform: scaleX(-1);" alt="Swamp Nuts Logo" height="50" class="align-top">
 		<div class="flex-grow-1"></div>
 
-        <div class="d-none d-md-inline-block mt-2 d-flex shutdown">
+        <div class="d-md-inline-block mt-2 d-flex shutdown">
+        <div class="d-md-inline-block mt-2 d-flex shutdown">
             <a href="#orderform" title="Order Online"
                class=" btn btn-dark text-uppercase d-inline-flex ">
                 <strong class="d-block">
@@ -242,8 +247,8 @@
 					<div class="d-xl-flex">
 						<div class="col-12 col-xl-4 p-3 text-center">
 
-                            <iframe class="d-none d-md-block" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100095323822454&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=1565988784348976" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-
+                            <!-- <iframe class="d-md-block" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100095323822454&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=1565988784348976" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                            -->
 
                         </div>
 						<div class="col-12 col-xl-8 p-3">
@@ -334,12 +339,12 @@
                             hand-prepared peanuts that capture the essence of a Southern boil in every bite. So grab
                             a bag, savor the flavors, and let us bring a taste of Prairieville to you!
                         </p>
-                        <!-- <p class="">
+                        <p class="">
                             <strong >
 								Looking for Cajun Hot Boiled Peanuts near you?
                                 We deliver to Prairieville and surrounding towns in Ascension Parish, Louisiana.
                             </strong>
-                        </p> -->
+                        </p>
 
                     </div>
                 </div>
@@ -380,48 +385,64 @@
                     <img src="./assets/logotrans.png" alt="Swamp Nuts Logo" height="50" class="align-top">
                     Order Online
                 </h2>
-                <form onsubmit="return false">
-                    <div class="mb-2">
-                        <h3>Fresh Flavor, Slow-Steamed — Delivered Hot</h3>
+
+                <div class="row" id="OrderTypeSelection">
+                    <div class="col-md-6 p-4">
+                        <div class="card bg-white p-4">
+                            <h3 class="text-center">Local Delivery</h3>
+                            <p>
+                                Local Delivery is only available to Prairieville and surrounding towns including Gonzales,
+                                Galvez, and St George
+                            </p>
+                            <p>
+                                <b class="text-danger">Free delivery to Prairieville, Galvez, Gonzales & nearby areas.</b> Orders placed after 6 PM will be delivered next day.
+                            </p>
+                            <div>
+                                <button class="btn btn-primary w-100"  onclick="deliverySelected()">Select Local Delivery</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-4">
+                        <div class="card bg-white p-4">
+                            <h3 class="text-center">Shipping</h3>
+                            <p>
+                                We ship anywhere in the <b>continental U.S.</b>.
+                            </p>
+                            <p>
+                                <b>Processing time:</b> 2 business days<br>
+                                <b>Estimated delivery:</b> 5–7 business days
+                            </p>
+                            <p>
+                                <b class="text-danger">Orders under $20 will incur a $3 shipping fee.</b>
+                            </p>
+                            <div>
+                                <button class="btn btn-secondary w-100" onclick="shippingSelected()" >Select Shipping</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <form onsubmit="return false" id="OrderFormDetails" class="d-none">
+                    <div class="mb-2" id="orderInfoText">
+                        <h3>Prepared Fresh, Handled Right</h3>
                         <p>
-                            Weekday orders are gently reheated from fresh-cooked batches using a steam method that preserves taste and texture.
-                        </p>
-                        <p>
-                            <b class="text-danger">Free delivery to Prairieville, Galvez, Gonzales & nearby areas.</b> Orders placed after 6 PM will be delivered next day.
+                            Every order is made with care and packaged to deliver the best possible flavor and quality — whether it’s coming to your doorstep or your mailbox.
                         </p>
                     </div>
                     <div class="row g-3" id="productContainer"></div>
 
-
-                    <div class="mb-2">
-                        <label for="name" class="form-label"><strong>Name</strong></label>
-                        <input id="name" class="form-control"/>
-                    </div>
-                    <div class="mb-2">
-                        <label for="email" class="form-label"><strong>Email</strong></label>
-                        <input id="email" class="form-control"/>
-                    </div>
                     <div class="mb-2">
                         <label for="phone" class="form-label"><strong>Phone</strong></label>
                         <input id="phone" class="form-control"/>
-                    </div>
-                    <div class="mb-4">
-                        <label for="address" class="form-label"><strong>Delivery Address</strong></label>
-                        <input id="address" class="form-control"/>
-                        <div class="form-text">
-                            We deliver to Galvez, Prairieville, and Gonzales.<br/>
-                            Pickup and Deliveries are made between 6 PM and 9 PM, Monday through Friday, with Saturday deliveries available when events permit.<br/>
-                            For pickup orders, please specify your requested pickup time. You will receive a text message with the pickup location.
-                        </div>
                     </div>
 
                     <div class="mb-2">
                         <label for="notes" class="form-label"><strong>Notes</strong></label>
                         <input id="notes" class="form-control"/>
                     </div>
-                    <div>
-                        <p>Payment is due at time of delivery or pickup.<br/>We Accept Cash, Card, Venmo, or Cashapp.</p>
-                    </div>
+
+
 
                     <div class="text-danger mb-4 d-none" id="FormErrorBox">
                         <div>
@@ -448,6 +469,11 @@
                                     <td colspan="2" class="text-end">Taxes (9.45%)</td>
                                     <td class="text-end fw-bold">$<span id="TaxesPrice">0.00</span></td>
                                 </tr>
+                                <tr>
+                                    <td colspan="2" class="text-end">Shipping</td>
+                                    <td class="text-end fw-bold">$<span id="ShippingPrice">0.00</span></td>
+                                </tr>
+
                                 <tr class="text-danger">
                                     <td colspan="2" class="text-end fw-bold">Total</td>
                                     <td class="text-end fw-bold">$<span id="TotalPrice">0.00</span></td>
@@ -456,7 +482,7 @@
                             </table>
 
                             <div class="d-grid">
-                                <button id="submitbutton" onclick="submitOrder()" class="btn btn-primary">Place Order</button>
+                                <div id="paypal-button-container" style="margin-top: 10px;"></div>
                             </div>
                         </div>
                     </div>

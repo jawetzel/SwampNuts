@@ -11,17 +11,8 @@ function RecordExternalClick(btnName, location) {
         'event_label': btnName
     });
 }
-function checkPastTime(){
-    console.log(new Date().getHours());
-    var pasttime = new Date().getHours() >= 16;
-    var element = document.getElementById("toolatedisplay");
-    var isHidden = element.classList.contains('d-none');
-    if ((pasttime && isHidden) || (!pasttime && !isHidden)) {
-        element.classList.toggle('d-none');
-    }
-}
 
-
+var shippingOptionSelected = false;
 
 const productData = [
     {
@@ -32,7 +23,8 @@ const productData = [
         priceLabel: '$8.00 - QUART',
         imgSrc: './assets/BoiledBagged.jpg',
         visible: true,
-        unitLabel: 'Quarts'
+        unitLabel: 'Quarts',
+        localOnly: true
     },
     {
         id: 'frozen',
@@ -42,7 +34,8 @@ const productData = [
         priceLabel: '$6.00 - QUART',
         imgSrc: './assets/BoiledBagged.jpg',
         visible: true,
-        unitLabel: 'Quarts'
+        unitLabel: 'Quarts',
+        localOnly: true
     },
     {
         id: 'roastedL',
@@ -52,7 +45,8 @@ const productData = [
         priceLabel: '$8.00 - 12 FL OZ',
         imgSrc: './assets/Roasted.jpg',
         visible: true,
-        unitLabel: 'Containers'
+        unitLabel: 'Containers',
+        localOnly: false
     },
     {
         id: 'roastedS',
@@ -62,11 +56,60 @@ const productData = [
         priceLabel: '$6.00 - 8 FL OZ',
         imgSrc: './assets/Roasted.jpg',
         visible: true,
-        unitLabel: 'Containers'
+        unitLabel: 'Containers',
+        localOnly: false
     }
 ];
 
-function renderProductSection(containerId, subtotalContainerId) {
+function renderPayPalButton(order) {
+
+    // Clear previous button to avoid duplicate rendering
+    const container = document.getElementById('paypal-button-container');
+    container.innerHTML = '';
+    if(!order || order === null) return;
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+
+            let orderUnits = {
+                purchase_units: [{
+                    amount: {
+                        currency_code: "USD",
+                        value: order.total,
+                        breakdown: {
+                            item_total: { value: order.subtotal, currency_code: "USD" },
+                            tax_total: { value: order.taxes, currency_code: "USD" },
+                            shipping: { value: order.shippingCost, currency_code: "USD" },
+                        }
+                    },
+                    items: order.cartItems.map(function(lineItem) {
+                        return {
+                            name: lineItem.product.name,
+                            unit_amount: { value: lineItem.product.price.toFixed(2), currency_code: "USD" },
+                            quantity: lineItem.qty,
+                            description: lineItem.product.unitLabel,
+                            category: "PHYSICAL_GOODS"
+                        };
+                    })
+                }],
+                payer: {
+                    phone: {
+                        phone_type: "MOBILE"
+                    }
+                }
+            };
+            return actions.order.create(orderUnits);
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                console.log("details", details);
+                submitOrder(details)
+            });
+        }
+    }).render('#paypal-button-container');
+}
+
+
+function renderProductSection(containerId, subtotalContainerId, localDelivery) {
     const container = document.getElementById(containerId);
     const subtotalContainer = document.getElementById(subtotalContainerId);
     container.innerHTML = ''; // Clear any existing content
@@ -74,7 +117,7 @@ function renderProductSection(containerId, subtotalContainerId) {
 
     productData.forEach(product => {
         if (!product.visible) return; // Skip rendering if not visible
-
+        if(!localDelivery && product.localOnly) return; // Skip rendering if not available for shipping
         // Product Input Card HTML
         const productCard = `
             <div class="mb-4 col-lg-3 col-md-6 col-sm-6">
@@ -117,13 +160,19 @@ function renderProductSection(containerId, subtotalContainerId) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    renderProductSection('productContainer', 'subtotalBody');
-    checkPastTime();
-    setInterval(function(){
-        checkPastTime();
-    }, 30000)
-});
+function deliverySelected() {
+    toggleVisibility(document.getElementById("OrderFormDetails"), true);
+    toggleVisibility(document.getElementById("OrderTypeSelection"), false);
+    renderProductSection('productContainer', 'subtotalBody', true);
+    renderPayPalButton(null);
+}
+function shippingSelected() {
+    toggleVisibility(document.getElementById("OrderFormDetails"), true);
+    toggleVisibility(document.getElementById("OrderTypeSelection"), false);
+    renderProductSection('productContainer', 'subtotalBody', false);
+    renderPayPalButton(null);
+    shippingOptionSelected = true;
+}
 
 // Shared Utility Functions
 function toggleVisibility(element, isVisible) {
@@ -156,11 +205,12 @@ function calculateSubtotal(qtys, prices) {
 }
 
 function calculateTaxes(subTotal, taxRate = 0.0945) {
+    if(shippingOptionSelected) return 0;
     return (taxRate * parseFloat(subTotal)).toFixed(2);
 }
 
-function calculateTotal(subTotal, taxes) {
-    return (parseFloat(subTotal) + parseFloat(taxes)).toFixed(2);
+function calculateTotal(subTotal, taxes, shipping) {
+    return (parseFloat(subTotal) + parseFloat(taxes) + shipping).toFixed(2);
 }
 
 function displayErrorMessages(errors, errorBox, errorList) {
@@ -216,6 +266,7 @@ function resetForm(fixedElements, updateTotalsFunction) {
 // Main Function to Update Totals
 function updateTotalsSection() {
     let subTotal = 0;
+    let cartItems = [];
 
     productData.forEach(product => {
         const qtyElement = document.getElementById(product.elementId);
@@ -231,6 +282,14 @@ function updateTotalsSection() {
 
         const subtotal = calculatePrice(qty, product.price);
         subTotal += parseFloat(subtotal);
+        if( qty > 0 ){
+            cartItems.push({
+                qty: qty,
+                subtotal: subtotal,
+                product: product
+            })
+        }
+
 
         if (rowElement) {
             toggleVisibility(rowElement, qty > 0);
@@ -246,32 +305,55 @@ function updateTotalsSection() {
     // Update subtotal, taxes, and total
     const subTotalElement = document.getElementById("SubTotalPrice");
     const taxesElement = document.getElementById("TaxesPrice");
+    const shippingElement  = document.getElementById("ShippingPrice");
     const totalPriceElement = document.getElementById("TotalPrice");
+    var shippingCost = 0;
+    if(shippingOptionSelected){
+        if(subTotal < 20) {
+            shippingCost = 3;
+        } else {
+            shippingCost = 0;
+        }
+    }
 
     const taxes = calculateTaxes(subTotal);
-    const total = calculateTotal(subTotal, taxes);
+    const total = calculateTotal(subTotal, taxes, shippingCost);
 
     if (subTotalElement) subTotalElement.innerText = subTotal.toFixed(2);
     if (taxesElement) taxesElement.innerText = taxes;
     if (totalPriceElement) totalPriceElement.innerText = total;
+    if (shippingElement) shippingElement.innerText = shippingCost;
+
+    if(cartItems && cartItems.length > 0){
+        renderPayPalButton({
+            taxes: taxes,
+            total: total,
+            subtotal: subTotal.toFixed(2),
+            cartItems: cartItems,
+            shippingCost: shippingCost
+        });
+    } else {
+        renderPayPalButton(null);
+    }
+
+
+
+
+
 }
 
 
 // Main Function to Handle Order Submission
-function submitOrder() {
+function submitOrder(paypalDetails) {
     const elements = {
-        name: document.getElementById("name"),
-        email: document.getElementById("email"),
+        name: paypalDetails.purchase_units[0].shipping.name.full_name,
+        email: paypalDetails.payer.email_address,
         phone: document.getElementById("phone"),
-        address: document.getElementById("address"),
+        address: `${paypalDetails.purchase_units[0].shipping.address.address_line_1} ${paypalDetails.purchase_units[0].shipping.address.address_line_2}, ${paypalDetails.purchase_units[0].shipping.address.admin_area_2}, ${paypalDetails.purchase_units[0].shipping.address.admin_area_1}, ${paypalDetails.purchase_units[0].shipping.address.postal_code}`,
         note: document.getElementById("notes")
     };
 
     const errors = [];
-    if (!validateField(elements.name.value)) errors.push("Name field is blank");
-    if (!validateField(elements.phone.value, 7) || !elements.phone.value.match(/^\+?[0-9\s\-().]{7,20}$/)) {
-        errors.push("Phone number invalid");
-    }
 
     let orderQtys = {};
     let hasItems = false;
@@ -308,15 +390,24 @@ function submitOrder() {
 
     const prices = productData.reduce((acc, product) => ({ ...acc, [product.id]: product.price }), {});
     const subTotal = calculateSubtotal(orderQtys, prices);
+    var shippingCost = 0;
+    if(shippingOptionSelected){
+        if(subTotal < 20) {
+            shippingCost = (3).toFixed(2);
+        } else {
+            shippingCost = (0).toFixed(2);
+        }
+    }
+
     const taxes = calculateTaxes(subTotal);
-    const total = calculateTotal(subTotal, taxes);
+    const total = calculateTotal(subTotal, taxes, shippingCost);
 
     const requestData = {
-        name: elements.name.value + " - " + elements.email.value,
-        phone: elements.phone.value,
+        name: elements.name + " - " + elements.email,
         qty: productData.map(product => `${product.id}: ${orderQtys[product.id]}`).join(' - '),
-        address: elements.address.value,
-        note: `Subtotal: ${subTotal} - Taxes: ${taxes} - Total: ${total} - Notes: ${elements.note.value}`
+        address: elements.address,
+        phone: elements.phone.value,
+        note: `Subtotal: ${subTotal} - Taxes: ${taxes} - Shipping: ${shippingCost} - Total: ${total} - Notes: ${elements.note.value}`
     };
     console.log("ORDER SUBMITTED ", JSON.stringify(requestData))
     fetchData("https://passwordsecurity.herokuapp.com/api/swampnuts/order", requestData)
@@ -340,9 +431,9 @@ function submitOrder() {
 
                     // Display order summary in a modal instead of redirecting
                     let orderSummary = `<h5 class="text-success mb-4">Your Order Has Been Placed!</h5>`;
-                    orderSummary += `<p><b>Name:</b> ${elements.name.value}</p>`;
+                    orderSummary += `<p><b>Name:</b> ${elements.name}</p>`;
                     orderSummary += `<p><b>Phone:</b> ${elements.phone.value}</p>`;
-                    orderSummary += `<p><b>Address:</b> ${elements.address.value}</p>`;
+                    orderSummary += `<p><b>Address:</b> ${elements.address}</p>`;
                     orderSummary += `<p><b>Notes:</b> ${elements.note.value}</p>`;
                     orderSummary += `<p><b>Items Ordered:</b></p>`;
                     orderSummary += `<ul>`;
@@ -368,6 +459,11 @@ function submitOrder() {
                                             <td><b>Taxes (9.45%):</b></td>
                                             <td><b>$${taxes}</b></td>
                                         </tr>
+                                        <tr>
+                                            <td><b>Shipping:</b></td>
+                                            <td><b>$${shippingCost}</b></td>
+                                        </tr>
+                                        
                                         <tr class="text-danger">
                                             <td><b>Total:</b></td>
                                             <td><b>$${total}</b></td>
