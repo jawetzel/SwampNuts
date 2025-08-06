@@ -90,20 +90,25 @@ function renderPayPalButton(order) {
                             category: "PHYSICAL_GOODS"
                         };
                     })
-                }],
-                payer: {
-                    phone: {
-                        phone_type: "MOBILE"
-                    }
-                }
+                }]
             };
             return actions.order.create(orderUnits);
         },
         onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                console.log("details", details);
-                submitOrder(details)
+            console.log(data);
+            actions.order.get().then(function(orderData) {
+                submitOrder(orderData, function(success){
+                    if(success){
+                        return actions.order.capture().then(function(details) {
+                            resetForm(["phone", "notes"], updateTotalsSection);
+                            console.log("details", details);
+                        });
+                    }
+                })
+
             });
+
+
         }
     }).render('#paypal-button-container');
 }
@@ -344,7 +349,7 @@ function updateTotalsSection() {
 
 
 // Main Function to Handle Order Submission
-function submitOrder(paypalDetails) {
+function submitOrder(paypalDetails, callback) {
     const elements = {
         name: paypalDetails.purchase_units[0].shipping.name.full_name,
         email: paypalDetails.payer.email_address,
@@ -375,19 +380,6 @@ function submitOrder(paypalDetails) {
         orderQtys[product.id] = qty;
     });
 
-
-    if (!hasItems) {
-        errors.push("Please add at least one item to the cart to place an order");
-    }
-
-    const errorBox = document.getElementById("FormErrorBox");
-    const errorList = document.getElementById("FormErrorList");
-    displayErrorMessages(errors, errorBox, errorList);
-    if (errors.length > 0) return;
-
-    document.getElementById("submitbutton").setAttribute("disabled", "");
-    document.getElementById("submitbutton").innerHTML = "Processing Order";
-
     const prices = productData.reduce((acc, product) => ({ ...acc, [product.id]: product.price }), {});
     const subTotal = calculateSubtotal(orderQtys, prices);
     var shippingCost = 0;
@@ -412,7 +404,6 @@ function submitOrder(paypalDetails) {
     console.log("ORDER SUBMITTED ", JSON.stringify(requestData))
     fetchData("https://passwordsecurity.herokuapp.com/api/swampnuts/order", requestData)
         .then(response => {
-            document.getElementById("submitbutton").innerHTML = "Place Order";
             response.text().then(res => {
                 if (res) {
                     gtag("event", "purchase", {
@@ -469,22 +460,15 @@ function submitOrder(paypalDetails) {
                                             <td><b>$${total}</b></td>
                                         </tr>
                                     </tbody></table>`;
-                    resetForm(["name", "phone", "address", "notes"], updateTotalsSection);
                     const modalContent = document.getElementById('OrderSummaryModalContent');
                     modalContent.innerHTML = orderSummary;
                     new bootstrap.Modal(document.getElementById('OrderSummaryModal')).show();
-
-                    document.getElementById("submitbutton").removeAttribute("disabled");
-                } else {
-                    new bootstrap.Modal(document.getElementById('OrderErrorModal')).show();
+                    callback(true)
                 }
             });
         })
         .catch(() => {
-            document.getElementById("submitbutton").innerHTML = "Place Order";
-            document.getElementById("submitbutton").removeAttribute("disabled");
             new bootstrap.Modal(document.getElementById('OrderErrorModal')).show();
+            callback(false);
         });
-
-    return false;
 }
