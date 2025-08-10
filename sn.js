@@ -176,7 +176,7 @@ function deliverySelected() {
     toggleVisibility(document.getElementById("paypalPaymentSectionContainer"), false);
 
     renderProductSection('productContainer', 'subtotalBody', true);
-    renderPayPalButton(null);
+    // renderPayPalButton(null);
 }
 function shippingSelected() {
     toggleVisibility(document.getElementById("OrderFormDetails"), true);
@@ -337,19 +337,32 @@ function updateTotalsSection() {
     if (totalPriceElement) totalPriceElement.innerText = total;
     if (shippingElement) shippingElement.innerText = shippingCost;
 
-    if(cartItems && cartItems.length > 0){
-        renderPayPalButton({
-            taxes: taxes,
-            total: total,
-            subtotal: subTotal.toFixed(2),
-            cartItems: cartItems,
-            shippingCost: shippingCost
-        });
+    if(shippingOptionSelected) {
+        if(cartItems && cartItems.length > 0){
+            renderPayPalButton({
+                taxes: taxes,
+                total: total,
+                subtotal: subTotal.toFixed(2),
+                cartItems: cartItems,
+                shippingCost: shippingCost
+            });
+        } else {
+            renderPayPalButton(null);
+        }
     } else {
-        renderPayPalButton(null);
+        const btn = document.getElementById("submitbutton");
+
+        if (cartItems && cartItems.length > 0) {
+            if (btn.hasAttribute("disabled")) {
+                btn.removeAttribute("disabled");
+            }
+        } else {
+            if (!btn.hasAttribute("disabled")) {
+                btn.setAttribute("disabled", "");
+            }
+        }
+
     }
-
-
 
 
 
