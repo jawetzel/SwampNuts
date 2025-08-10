@@ -515,6 +515,9 @@ function submitOrder(paypalDetails = null, callback = null) {
                     const modalContent = document.getElementById('OrderSummaryModalContent');
                     modalContent.innerHTML = orderSummary;
                     new bootstrap.Modal(document.getElementById('OrderSummaryModal')).show();
+                    if(!paypalDetails) {
+                        document.getElementById("submitbutton").innerHTML = "Order Complete";
+                    }
                     if(callback){
                         callback(true)
                     }
@@ -522,6 +525,10 @@ function submitOrder(paypalDetails = null, callback = null) {
                 }
                 else {
                     if(callback){
+                        if(!paypalDetails) {
+                            document.getElementById("submitbutton").removeAttribute("disabled");
+                            document.getElementById("submitbutton").innerHTML = "Order Failed";
+                        }
                         callback(false)
                     }
                 }
@@ -530,6 +537,10 @@ function submitOrder(paypalDetails = null, callback = null) {
         .catch(() => {
             new bootstrap.Modal(document.getElementById('OrderErrorModal')).show();
             if(callback){
+                if(!paypalDetails) {
+                    document.getElementById("submitbutton").removeAttribute("disabled");
+                    document.getElementById("submitbutton").innerHTML = "Order Failed";
+                }
                 callback(false)
             }
         });
