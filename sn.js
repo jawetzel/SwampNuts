@@ -379,23 +379,7 @@ function submitOrder(paypalDetails = null, callback = null) {
         note: document.getElementById("notes")
     };
 
-    const errors = [];
-    if(!paypalDetails) {
-        if (!validateField(elements.name.value)) errors.push("Name field is blank");
-        if (!validateField(elements.phone.value, 7) || !elements.phone.value.match(/^\+?[0-9\s\-().]{7,20}$/)) {
-            errors.push("Phone number invalid");
-        }
-        if (!validateField(elements.address.value, 1)) {
-            errors.push("Delivery Address field is blank");
-        }
-    }
 
-    const errorBox = document.getElementById("FormErrorBox");
-    const errorList = document.getElementById("FormErrorList");
-    if(errors && errors.length > 0) {
-        displayErrorMessages(errors, errorBox, errorList);
-        return;
-    }
 
     let orderQtys = {};
     let hasItems = false;
@@ -415,6 +399,28 @@ function submitOrder(paypalDetails = null, callback = null) {
             orderQtys[product.id] = qty;
         }
     });
+
+    const errors = [];
+    if(!paypalDetails) {
+
+        if (!validateField(elements.name.value)) errors.push("Name field is blank");
+        if (!validateField(elements.phone.value, 7) || !elements.phone.value.match(/^\+?[0-9\s\-().]{7,20}$/)) {
+            errors.push("Phone number invalid");
+        }
+        if (!validateField(elements.address.value, 1)) {
+            errors.push("Delivery Address field is blank");
+        }
+        if(!hasItems) {
+            errors.push("No items have been added to the cart");
+        }
+    }
+
+    const errorBox = document.getElementById("FormErrorBox");
+    const errorList = document.getElementById("FormErrorList");
+    if(errors && errors.length > 0) {
+        displayErrorMessages(errors, errorBox, errorList);
+        return;
+    }
 
     if(!paypalDetails) {
         document.getElementById("submitbutton").setAttribute("disabled", "");
