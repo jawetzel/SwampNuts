@@ -426,9 +426,9 @@ function submitOrder(paypalDetails = null, callback = null) {
     var shippingCost = 0;
     if(shippingOptionSelected){
         if(subTotal < 20) {
-            shippingCost = (3).toFixed(2);
+            shippingCost = 3;
         } else {
-            shippingCost = (0).toFixed(2);
+            shippingCost = 0;
         }
     }
 
@@ -440,7 +440,7 @@ function submitOrder(paypalDetails = null, callback = null) {
         qty: productData.map(product => `${product.id}: ${orderQtys[product.id]}`).join(' - '),
         address: elements.address,
         phone: elements.phone.value,
-        note: `Subtotal: ${subTotal} - Taxes: ${taxes} - Shipping: ${shippingCost} - Total: ${total} - Notes: ${elements.note.value}`
+        note: `Subtotal: ${subTotal} - Taxes: ${taxes} - Shipping: ${shippingCost.toFixed(2)} - Total: ${total} - Notes: ${elements.note.value}`
     } : {
         name: elements.name.value + " - " + elements.email.value,
         phone: elements.phone.value,
@@ -500,7 +500,7 @@ function submitOrder(paypalDetails = null, callback = null) {
                                         </tr>
                                         <tr>
                                             <td><b>Shipping:</b></td>
-                                            <td><b>$${shippingCost}</b></td>
+                                            <td><b>$${shippingCost.toFixed(2)}</b></td>
                                         </tr>
                                         
                                         <tr class="text-danger">
