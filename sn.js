@@ -376,7 +376,7 @@ function submitOrder(paypalDetails = null, callback = null) {
         phone: document.getElementById("phone"),
         address: paypalDetails ? `${paypalDetails.purchase_units[0].shipping.address.address_line_1} ${paypalDetails.purchase_units[0].shipping.address.address_line_2}, ${paypalDetails.purchase_units[0].shipping.address.admin_area_2}, ${paypalDetails.purchase_units[0].shipping.address.admin_area_1}, ${paypalDetails.purchase_units[0].shipping.address.postal_code}` :
                                 document.getElementById("address"),
-        note: paypalDetails ? "paypal payment - " + document.getElementById("notes") : document.getElementById("notes")
+        note: document.getElementById("notes")
     };
 
 
