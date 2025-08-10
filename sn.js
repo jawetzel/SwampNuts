@@ -435,14 +435,20 @@ function submitOrder(paypalDetails = null, callback = null) {
 
     const requestData = paypalDetails ? {
         name: elements.name + " - " + elements.email,
-        qty: Object.entries(orderQtys).map(([id, qty]) => `${id}: ${qty}`).join(' - '),
+        qty: Object.entries(orderQtys)
+            .filter(([_, q]) => q)
+            .map(([id, q]) => `${id}: ${q}`)
+            .join(' - '),
         address: elements.address,
         phone: elements.phone.value,
         note: `Subtotal: ${subTotal} - Taxes: ${taxes} - Shipping: ${shippingCost.toFixed(2)} - Total: ${total} - Notes: ${elements.note.value}`
     } : {
         name: elements.name.value + " - " + elements.email.value,
         phone: elements.phone.value,
-        qty: Object.entries(orderQtys).map(([id, qty]) => `${id}: ${qty}`).join(' - '),
+        qty: Object.entries(orderQtys)
+            .filter(([_, q]) => q)
+            .map(([id, q]) => `${id}: ${q}`)
+            .join(' - '),
         address: elements.address.value,
         note: `Subtotal: ${subTotal} - Taxes: ${taxes} - Total: ${total} - Notes: ${elements.note.value}`
     };
@@ -513,6 +519,11 @@ function submitOrder(paypalDetails = null, callback = null) {
                         callback(true)
                     }
 
+                }
+                else {
+                    if(callback){
+                        callback(false)
+                    }
                 }
             });
         })
