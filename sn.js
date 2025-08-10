@@ -521,7 +521,7 @@ function submitOrder(paypalDetails = null, callback = null) {
         .catch(() => {
             new bootstrap.Modal(document.getElementById('OrderErrorModal')).show();
             if(callback){
-                callback(true)
+                callback(false)
             }
         });
 }
