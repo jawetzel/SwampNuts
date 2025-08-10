@@ -95,13 +95,11 @@ function renderPayPalButton(order) {
             return actions.order.create(orderUnits);
         },
         onApprove: function(data, actions) {
-            console.log(data);
             actions.order.get().then(function(orderData) {
                 submitOrder(orderData, function(success){
                     if(success){
                         return actions.order.capture().then(function(details) {
                             resetForm(["phone", "notes"], updateTotalsSection);
-                            console.log("details", details);
                         });
                     }
                 })
@@ -177,6 +175,7 @@ function deliverySelected() {
 
     renderProductSection('productContainer', 'subtotalBody', true);
     // renderPayPalButton(null);
+    shippingOptionSelected = false;
 }
 function shippingSelected() {
     toggleVisibility(document.getElementById("OrderFormDetails"), true);
@@ -344,7 +343,7 @@ function updateTotalsSection() {
                 total: total,
                 subtotal: subTotal.toFixed(2),
                 cartItems: cartItems,
-                shippingCost: shippingCost
+                shippingCost: shippingCost.toFixed(2)
             });
         } else {
             renderPayPalButton(null);
@@ -399,17 +398,14 @@ function submitOrder(paypalDetails = null, callback = null) {
     let hasItems = false;
     productData.forEach(product => {
         if (!product.visible) {
-            console.log(`Skipping ${product.id} - product is not visible`);
             return; // Skip this iteration if the product is not visible
         }
 
         const qtyElement = document.getElementById(product.elementId);
         if (!qtyElement) {
-            console.warn(`Element with id ${product.elementId} not found. Skipping.`);
             return; // Skip this iteration if the element is not found
         }
 
-        console.log(`Element with id ${product.elementId} found:`, qtyElement);
         const qty = parseInt(qtyElement.value || 0);
         if (qty > 0) {
             hasItems = true;
