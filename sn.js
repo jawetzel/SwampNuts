@@ -385,6 +385,9 @@ function submitOrder(paypalDetails = null, callback = null) {
         if (!validateField(elements.phone.value, 7) || !elements.phone.value.match(/^\+?[0-9\s\-().]{7,20}$/)) {
             errors.push("Phone number invalid");
         }
+        if (!validateField(elements.address.value, 1)) {
+            errors.push("Delivery Address field is blank");
+        }
     }
 
     const errorBox = document.getElementById("FormErrorBox");
