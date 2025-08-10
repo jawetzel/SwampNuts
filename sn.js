@@ -168,6 +168,13 @@ function renderProductSection(containerId, subtotalContainerId, localDelivery) {
 function deliverySelected() {
     toggleVisibility(document.getElementById("OrderFormDetails"), true);
     toggleVisibility(document.getElementById("OrderTypeSelection"), false);
+
+    toggleVisibility(document.getElementById("nameContainer"), true);
+    toggleVisibility(document.getElementById("emilContainer"), true);
+    toggleVisibility(document.getElementById("addressContainer"), true);
+    toggleVisibility(document.getElementById("submitOrderContainer"), true);
+    toggleVisibility(document.getElementById("paypalPaymentSectionContainer"), false);
+
     renderProductSection('productContainer', 'subtotalBody', true);
     renderPayPalButton(null);
 }
@@ -175,6 +182,7 @@ function shippingSelected() {
     toggleVisibility(document.getElementById("OrderFormDetails"), true);
     toggleVisibility(document.getElementById("OrderTypeSelection"), false);
     renderProductSection('productContainer', 'subtotalBody', false);
+    toggleVisibility(document.getElementById("paypalPaymentSectionContainer"), true);
     renderPayPalButton(null);
     shippingOptionSelected = true;
 }
@@ -349,16 +357,30 @@ function updateTotalsSection() {
 
 
 // Main Function to Handle Order Submission
-function submitOrder(paypalDetails, callback) {
+function submitOrder(paypalDetails = null, callback = null) {
     const elements = {
-        name: paypalDetails.purchase_units[0].shipping.name.full_name,
-        email: paypalDetails.payer.email_address,
+        name: paypalDetails ? paypalDetails.purchase_units[0].shipping.name.full_name : document.getElementById("name"),
+        email: paypalDetails ? paypalDetails.payer.email_address : document.getElementById("email"),
         phone: document.getElementById("phone"),
-        address: `${paypalDetails.purchase_units[0].shipping.address.address_line_1} ${paypalDetails.purchase_units[0].shipping.address.address_line_2}, ${paypalDetails.purchase_units[0].shipping.address.admin_area_2}, ${paypalDetails.purchase_units[0].shipping.address.admin_area_1}, ${paypalDetails.purchase_units[0].shipping.address.postal_code}`,
+        address: paypalDetails ? `${paypalDetails.purchase_units[0].shipping.address.address_line_1} ${paypalDetails.purchase_units[0].shipping.address.address_line_2}, ${paypalDetails.purchase_units[0].shipping.address.admin_area_2}, ${paypalDetails.purchase_units[0].shipping.address.admin_area_1}, ${paypalDetails.purchase_units[0].shipping.address.postal_code}` :
+                                document.getElementById("address"),
         note: document.getElementById("notes")
     };
 
     const errors = [];
+    if(!paypalDetails) {
+        if (!validateField(elements.name.value)) errors.push("Name field is blank");
+        if (!validateField(elements.phone.value, 7) || !elements.phone.value.match(/^\+?[0-9\s\-().]{7,20}$/)) {
+            errors.push("Phone number invalid");
+        }
+    }
+
+    const errorBox = document.getElementById("FormErrorBox");
+    const errorList = document.getElementById("FormErrorList");
+    if(errors && errors.length > 0) {
+        displayErrorMessages(errors, errorBox, errorList);
+        return;
+    }
 
     let orderQtys = {};
     let hasItems = false;
@@ -380,6 +402,12 @@ function submitOrder(paypalDetails, callback) {
         orderQtys[product.id] = qty;
     });
 
+    if(!paypalDetails) {
+        document.getElementById("submitbutton").setAttribute("disabled", "");
+        document.getElementById("submitbutton").innerHTML = "Processing Order";
+    }
+
+
     const prices = productData.reduce((acc, product) => ({ ...acc, [product.id]: product.price }), {});
     const subTotal = calculateSubtotal(orderQtys, prices);
     var shippingCost = 0;
@@ -394,13 +422,20 @@ function submitOrder(paypalDetails, callback) {
     const taxes = calculateTaxes(subTotal);
     const total = calculateTotal(subTotal, taxes, shippingCost);
 
-    const requestData = {
+    const requestData = paypalDetails ? {
         name: elements.name + " - " + elements.email,
         qty: productData.map(product => `${product.id}: ${orderQtys[product.id]}`).join(' - '),
         address: elements.address,
         phone: elements.phone.value,
         note: `Subtotal: ${subTotal} - Taxes: ${taxes} - Shipping: ${shippingCost} - Total: ${total} - Notes: ${elements.note.value}`
+    } : {
+        name: elements.name.value + " - " + elements.email.value,
+        phone: elements.phone.value,
+        qty: productData.map(product => `${product.id}: ${orderQtys[product.id]}`).join(' - '),
+        address: elements.address.value,
+        note: `Subtotal: ${subTotal} - Taxes: ${taxes} - Total: ${total} - Notes: ${elements.note.value}`
     };
+
     console.log("ORDER SUBMITTED ", JSON.stringify(requestData))
     fetchData("https://passwordsecurity.herokuapp.com/api/swampnuts/order", requestData)
         .then(response => {
@@ -422,9 +457,9 @@ function submitOrder(paypalDetails, callback) {
 
                     // Display order summary in a modal instead of redirecting
                     let orderSummary = `<h5 class="text-success mb-4">Your Order Has Been Placed!</h5>`;
-                    orderSummary += `<p><b>Name:</b> ${elements.name}</p>`;
-                    orderSummary += `<p><b>Phone:</b> ${elements.phone.value}</p>`;
-                    orderSummary += `<p><b>Address:</b> ${elements.address}</p>`;
+                    orderSummary += `<p><b>Name:</b> ${requestData.name}</p>`;
+                    orderSummary += `<p><b>Phone:</b> ${requestData.phone}</p>`;
+                    orderSummary += `<p><b>Address:</b> ${requestData.address}</p>`;
                     orderSummary += `<p><b>Notes:</b> ${elements.note.value}</p>`;
                     orderSummary += `<p><b>Items Ordered:</b></p>`;
                     orderSummary += `<ul>`;
@@ -463,12 +498,17 @@ function submitOrder(paypalDetails, callback) {
                     const modalContent = document.getElementById('OrderSummaryModalContent');
                     modalContent.innerHTML = orderSummary;
                     new bootstrap.Modal(document.getElementById('OrderSummaryModal')).show();
-                    callback(true)
+                    if(callback){
+                        callback(true)
+                    }
+
                 }
             });
         })
         .catch(() => {
             new bootstrap.Modal(document.getElementById('OrderErrorModal')).show();
-            callback(false);
+            if(callback){
+                callback(true)
+            }
         });
 }

@@ -430,12 +430,29 @@
                     </div>
                     <div class="row g-3" id="productContainer"></div>
 
-                    <div class="mb-2">
+                    <div class="mb-2 d-none" id="nameContainer">
+                        <label for="name" class="form-label"><strong>Name</strong></label>
+                        <input id="name" class="form-control"/>
+                    </div>
+                    <div class="mb-2 d-none" id="emilContainer">
+                        <label for="email" class="form-label"><strong>Email</strong></label>
+                        <input id="email" class="form-control"/>
+                    </div>
+                    <div class="mb-2" id="phoneContainer">
                         <label for="phone" class="form-label"><strong>Phone</strong></label>
                         <input id="phone" class="form-control"/>
                     </div>
+                    <div class="mb-4 d-none" id="addressContainer">
+                        <label for="address" class="form-label"><strong>Delivery Address</strong></label>
+                        <input id="address" class="form-control"/>
+                        <div class="form-text">
+                            We deliver to Galvez, Prairieville, and Gonzales.<br/>
+                            Pickup and Deliveries are made between 6 PM and 9 PM, Monday through Friday, with Saturday deliveries available when events permit.<br/>
+                            For pickup orders, please specify your requested pickup time. You will receive a text message with the pickup location.
+                        </div>
+                    </div>
 
-                    <div class="mb-2">
+                    <div class="mb-2" id="notesContainer">
                         <label for="notes" class="form-label"><strong>Notes</strong></label>
                         <input id="notes" class="form-control"/>
                     </div>
@@ -479,8 +496,12 @@
                                 </tfoot>
                             </table>
 
-                            <div class="d-grid">
+                            <div class="d-grid d-none" id="paypalPaymentSectionContainer">
                                 <div id="paypal-button-container" style="margin-top: 10px;"></div>
+                            </div>
+
+                            <div class="d-grid d-none" id="submitOrderContainer">
+                                <button id="submitbutton" onclick="submitOrder()" class="btn btn-primary">Place Order</button>
                             </div>
                         </div>
                     </div>
