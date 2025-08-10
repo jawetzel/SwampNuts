@@ -335,7 +335,7 @@ function updateTotalsSection() {
     if (subTotalElement) subTotalElement.innerText = subTotal.toFixed(2);
     if (taxesElement) taxesElement.innerText = taxes;
     if (totalPriceElement) totalPriceElement.innerText = total;
-    if (shippingElement) shippingElement.innerText = shippingCost;
+    if (shippingElement) shippingElement.innerText = shippingCost.toFixed(2);
 
     if(shippingOptionSelected) {
         if(cartItems && cartItems.length > 0){
@@ -411,8 +411,10 @@ function submitOrder(paypalDetails = null, callback = null) {
 
         console.log(`Element with id ${product.elementId} found:`, qtyElement);
         const qty = parseInt(qtyElement.value || 0);
-        if (qty > 0) hasItems = true;
-        orderQtys[product.id] = qty;
+        if (qty > 0) {
+            hasItems = true;
+            orderQtys[product.id] = qty;
+        }
     });
 
     if(!paypalDetails) {
@@ -437,14 +439,14 @@ function submitOrder(paypalDetails = null, callback = null) {
 
     const requestData = paypalDetails ? {
         name: elements.name + " - " + elements.email,
-        qty: productData.map(product => `${product.id}: ${orderQtys[product.id]}`).join(' - '),
+        qty: Object.entries(orderQtys).map(([id, qty]) => `${id}: ${qty}`).join(' - '),
         address: elements.address,
         phone: elements.phone.value,
         note: `Subtotal: ${subTotal} - Taxes: ${taxes} - Shipping: ${shippingCost.toFixed(2)} - Total: ${total} - Notes: ${elements.note.value}`
     } : {
         name: elements.name.value + " - " + elements.email.value,
         phone: elements.phone.value,
-        qty: productData.map(product => `${product.id}: ${orderQtys[product.id]}`).join(' - '),
+        qty: Object.entries(orderQtys).map(([id, qty]) => `${id}: ${qty}`).join(' - '),
         address: elements.address.value,
         note: `Subtotal: ${subTotal} - Taxes: ${taxes} - Total: ${total} - Notes: ${elements.note.value}`
     };
