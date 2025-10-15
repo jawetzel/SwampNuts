@@ -202,10 +202,6 @@
                                 offering an authentic taste of Louisiana with every bite. Perfect for snack lovers
                                 looking to experience a true Cajun classic.
                             </div>
-                            <div class="mt-2 shutdown">
-                                <a href="#orderform" class="btn btn-brand-primary">Order Now</a>
-                            </div>
-
                         </div>
                         <div class="col-md-6 p-3 border border-dark-subtle">
                             <div class="fs-5 text-center fw-bolder">Roasted</div>
@@ -219,9 +215,6 @@
                                 spices</strong> like <span class="text-danger">red pepper, garlic, and lemon</span>,
                                 these roasted nuts are perfect for anyone craving a bold, satisfying snack that’s
                                 packed with Southern character.
-                            </div>
-                            <div class="mt-2">
-                                <a href="#orderform" class="btn btn-brand-primary shutdown">Order Now</a>
                             </div>
                         </div>
                     </div>
@@ -329,9 +322,9 @@
                             a bag, savor the flavors, and let us bring a taste of Prairieville to you!
                         </p>
                         <p class="">
-                            <strong >
-								Looking for Cajun Hot Boiled Peanuts near you?
-                                We deliver to Prairieville and surrounding towns in Ascension Parish, Louisiana.
+                            <strong>
+                                Looking for Cajun Hot Boiled Peanuts near you?
+                                Find us at local farmers markets and follow us on Facebook for weekly location updates.
                             </strong>
                         </p>
 
@@ -367,181 +360,23 @@
     </div>
 
 
-    <div class="row mt-4 shutdown" id="orderform">
+        <div class="row mt-4">
         <div class="col-12">
             <div class="card bg-white p-4">
-                <h2 class="fs-1">
+                <h2 class="fs-1 d-flex align-items-center gap-2">
                     <img src="./assets/logotrans.png" alt="Swamp Nuts Logo" height="50" class="align-top">
-                    Order Online
+                    Stay Connected With Swamp Nuts
                 </h2>
-
-                <div class="row" id="OrderTypeSelection">
-                    <div class="col-md-6 p-4">
-                        <div class="card bg-white p-4">
-                            <h3 class="text-center">Local Delivery</h3>
-                            <p>
-                                Local Delivery is only available to Prairieville and surrounding towns including Gonzales,
-                                Galvez, and St George
-                            </p>
-                            <p>
-                                <b class="text-danger">Free delivery to Prairieville, Galvez, Gonzales & nearby areas.</b> Orders placed after 6 PM will be delivered next day.
-                            </p>
-                            <div>
-                                <button class="btn btn-brand-primary w-100" onclick="deliverySelected()">Select Local Delivery</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 p-4">
-                        <div class="card bg-white p-4">
-                            <h3 class="text-center">Shipping</h3>
-                            <p>
-                                We ship anywhere in the <b>continental U.S.</b>.
-                            </p>
-                            <p>
-                                <b>Processing time:</b> 2 business days<br>
-                                <b>Estimated delivery:</b> 5–7 business days
-                            </p>
-                            <p>
-                                <b class="text-danger">Orders under $20 will incur a $3 shipping fee.</b>
-                            </p>
-                            <div>
-                                <button class="btn btn-brand-secondary w-100" onclick="shippingSelected()" >Select Shipping</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <form onsubmit="return false" id="OrderFormDetails" class="d-none">
-                    <div class="mb-2" id="orderInfoText">
-                        <h3>Prepared Fresh, Handled Right</h3>
-                        <p>
-                            Every order is made with care and packaged to deliver the best possible flavor and quality — whether it’s coming to your doorstep or your mailbox.
-                        </p>
-                    </div>
-                    <div class="row g-3" id="productContainer"></div>
-
-                    <div class="mb-2 d-none" id="nameContainer">
-                        <label for="name" class="form-label"><strong>Name</strong></label>
-                        <input id="name" class="form-control"/>
-                    </div>
-                    <div class="mb-2 d-none" id="emilContainer">
-                        <label for="email" class="form-label"><strong>Email</strong></label>
-                        <input id="email" class="form-control"/>
-                    </div>
-                    <div class="mb-2" id="phoneContainer">
-                        <label for="phone" class="form-label"><strong>Phone</strong></label>
-                        <input id="phone" class="form-control"/>
-                    </div>
-                    <div class="mb-4 d-none" id="addressContainer">
-                        <label for="address" class="form-label"><strong>Delivery Address</strong></label>
-                        <input id="address" class="form-control"/>
-                        <div class="form-text">
-                            We deliver to Galvez, Prairieville, and Gonzales.<br/>
-                            Pickup and Deliveries are made between 6 PM and 9 PM, Monday through Friday, with Saturday deliveries available when events permit.<br/>
-                            For pickup orders, please specify your requested pickup time. You will receive a text message with the pickup location.
-                        </div>
-                    </div>
-
-                    <div class="mb-2" id="notesContainer">
-                        <label for="notes" class="form-label"><strong>Notes</strong></label>
-                        <input id="notes" class="form-control"/>
-                    </div>
-
-
-
-                    <div class="text-danger mb-4 d-none" id="FormErrorBox">
-                        <div>
-                            The order form needs some more information before it can be submitted.
-                        </div>
-                        <ul id="FormErrorList">
-                        </ul>
-                    </div>
-
-                    <div class="summary-container text-center mt-4">
-                        <div class="card p-3 shadow-sm" style="min-width: 320px; max-width: 420px;">
-                            <h5 class="text-center fw-bold mb-3">Order Summary</h5>
-
-                            <table class="table table-sm mb-3">
-                                <tbody id="subtotalBody" class="table-bordered">
-                                <!-- dynamically inserted subtotal rows -->
-                                </tbody>
-                                <tfoot class="table-bordered">
-                                <tr class="text-success">
-                                    <td colspan="2" class="text-end fw-bold">Subtotal</td>
-                                    <td class="text-end fw-bold">$<span id="SubTotalPrice">0.00</span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="text-end">Taxes (9.45%)</td>
-                                    <td class="text-end fw-bold">$<span id="TaxesPrice">0.00</span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="text-end">Shipping</td>
-                                    <td class="text-end fw-bold">$<span id="ShippingPrice">0.00</span></td>
-                                </tr>
-
-                                <tr class="text-danger">
-                                    <td colspan="2" class="text-end fw-bold">Total</td>
-                                    <td class="text-end fw-bold">$<span id="TotalPrice">0.00</span></td>
-                                </tr>
-                                </tfoot>
-                            </table>
-
-                            <div class="d-grid d-none" id="paypalPaymentSectionContainer">
-                                <div id="paypal-button-container" style="margin-top: 10px;"></div>
-                            </div>
-
-                            <div class="d-grid d-none" id="submitOrderContainer">
-                                <button id="submitbutton" onclick="submitOrder()" class="btn btn-primary">Place Order</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
+                <p class="lead mb-0">
+                    Follow us on
+                    <a href="https://www.facebook.com/swampnuts.biz" target="_blank" rel="noopener noreferrer">Facebook</a>
+                    for weekly updates on market appearances, new flavors, and behind-the-scenes looks at our Cajun
+                    peanut kitchen.
+                </p>
             </div>
         </div>
-
-        <div class="modal" tabindex="-1" id="OrderErrorModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title fs-2 text-danger">Order Error</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            Sorry, it looks like something went wrong. Your order has not been processed.
-                            If this error persists please reach out to us on facebook messenger to place your order.
-                        </p>
-                        <a href="https://www.facebook.com/profile.php?id=100095323822454">Facebook Page</a>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal" tabindex="-1" id="OrderSummaryModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Thank you for your business!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="OrderSummaryModalContent">
-                        <!-- Order summary content will be inserted here -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-	
-</div>
 <footer class="footer mt-auto py-3 bg-light">
     <div class="container">
         <div class="row">
